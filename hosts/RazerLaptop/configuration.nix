@@ -34,7 +34,10 @@
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
  
-  hardware.opengl.enable = true;
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
 
   i18n.defaultLocale = "en_GB.UTF-8";
   
