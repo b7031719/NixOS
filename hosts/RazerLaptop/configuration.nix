@@ -7,6 +7,8 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
+  boot.kernelParams = [ "video=1920x1080" ];
+
   boot.loader = {
     systemd-boot.enable = false;
     efi = {
