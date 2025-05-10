@@ -1,4 +1,4 @@
-{ config, pkgs, inputs ...}:
+{ config, pkgs, inputs, ...}:
 let
   hypr = inputs.hyprland.packages;
 in
@@ -12,11 +12,11 @@ in
     settings = {
       
       # Define some application variables
-      $terminal = "kitty"
-      $menu = "rofi -show drun"
+      "$terminal" = "kitty";
+      "$menu" = "rofi -show drun";
 
       # Define the mod key binding
-      $mainMod = "SUPER";
+      "$mainMod" = "SUPER";
 
       input = {
         kb_layout = "gb";
@@ -36,7 +36,7 @@ in
         "$mainMod, M, exit,"
         "$mainMod, R, exec, $menu"
         "$mainMod, C, killactive,"
-	"$mainMod, B, execm brave"
+	"$mainMod, B, exec, brave"
         "$mainMod, left, movefocus, l"
         "$mainMod, right, movefocus, r"
         "$mainMod, up, movefocus, u"
