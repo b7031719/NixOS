@@ -24,6 +24,10 @@
     };
   };
 
+  programs.yazi = {
+    enable = true;
+  };
+
   fonts.fontconfig.enable = true;
   
   programs.git = {
@@ -36,6 +40,7 @@
     polkit
     waybar
     rofi-wayland
+    dunst
     brave
     tmux
     protonmail-desktop
