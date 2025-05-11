@@ -59,6 +59,8 @@
 
   console.keyMap = "uk";
   
+  environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];
+
   environment.systemPackages = with pkgs; [
     neovim
     git
