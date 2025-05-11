@@ -14,7 +14,7 @@ in
       # Define some application variables
       "$terminal" = "kitty";
       "$menu" = "rofi -show drun";
-      "$fileManager" = "yazi";
+      "$fileManager" = "kitty -e yazi";
 
       # Define the mod key binding
       "$mainMod" = "SUPER";
@@ -41,7 +41,7 @@ in
 	"$mainMod, T, togglefloating,"
         "$mainMod, P, pseudo,"
 	"$mainMod, J, togglesplit,"
-	"$mainMod, E, exec, $fileManager,"
+	"$mainMod, E, exec, $fileManager"
 	"$mainMod, F, fullscreen, 1"
 	"$mainMod SHIFT, F, fullscreen, 0"
         "$mainMod, left, movefocus, l"
