@@ -47,6 +47,8 @@
     protonvpn-gui
     protonmail-desktop
     conda
+    xdg-utils
+    gtk3
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
     nerd-fonts.hack
