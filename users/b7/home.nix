@@ -43,9 +43,9 @@
     dunst
     brave
     tmux
-    protonmail-desktop
     proton-pass
     protonvpn-gui
+    protonmail-desktop
     conda
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
