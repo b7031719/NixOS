@@ -17,6 +17,7 @@
       modules = [ 
         home-manager.nixosModules.home-manager
         ./hosts/RazerLaptop/configuration.nix
+	./hosts/RazerLaptop/hardware-configuration.nix
       ];
     };
   };

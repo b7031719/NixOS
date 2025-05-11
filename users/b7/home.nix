@@ -36,13 +36,23 @@
     userEmail = "danfenton@pm.me";
   };
 
+  programs.waybar = {
+    enable = true;
+  };
+
+  programs.rofi = {
+    enable = true;
+    package = pkgs.rofi-wayland;
+  };
+
+  programs.tmux = {
+    enable = true;
+  };
+
   home.packages = with pkgs; [
     polkit
-    waybar
-    rofi-wayland
     dunst
     brave
-    tmux
     proton-pass
     protonvpn-gui
     protonmail-desktop
