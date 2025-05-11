@@ -1,10 +1,6 @@
 { inputs, pkgs, lib, config, ... }:
 
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
-
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
   boot.kernelParams = [ "video=1920x1080" ];
