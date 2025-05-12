@@ -8,7 +8,6 @@ in
     package = hypr.${pkgs.stdenv.hostPlatform.system}.hyprland;
     portalPackage = hypr.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
-    systemd.enable = true;
     settings = {
       
       # Define some application variables
@@ -33,15 +32,13 @@ in
 
       # Key bindings
       bind = [
-        "$mainMod, Q, exec, $terminal"
+        "$mainMod, Q, exec, uwsm app -- $terminal"
         "$mainMod, M, exit,"
-        "$mainMod, R, exec, $menu"
+        "$mainMod, R, exec, uwsm app -- $menu"
         "$mainMod, C, killactive,"
-	"$mainMod, B, exec, brave"
+	"$mainMod, B, exec, uwsm app -- brave"
 	"$mainMod, T, togglefloating,"
-        "$mainMod, P, pseudo,"
-	"$mainMod, J, togglesplit,"
-	"$mainMod, E, exec, $fileManager"
+	"$mainMod, E, exec, uwsm app -- $fileManager"
 	"$mainMod, F, fullscreen, 1"
 	"$mainMod SHIFT, F, fullscreen, 0"
         "$mainMod, left, movefocus, l"
@@ -70,12 +67,18 @@ in
         "$mainMod SHIFT, 0, workspace, 10"
       ];
       
+      bindm = [
+        "$mainMod, mouse:272, movewindow"
+	"$mainMod, mouse:273, resizewindow"
+      ];
+
       # Monitor settings
       monitor = [ ",preferred,auto,1" ];
 
       exec-once = [
-        "waybar"
+        "uwsm app -- waybar"
         "dbus-update-activation-environment --systemd DISPLAY XAUTHORITY WAYLAND_DISPLAY XDG_SESSION_DESKTOP=Hyprland XDG_CURRENT_DESKTOP=Hyprland XDG_SESSION_TYPE=wayland"
+	"uwsm app -- dunst"
       ];
 
     };

@@ -12,7 +12,7 @@
     syntaxHighlighting.enable = true;
     enableCompletion = true;
     loginExtra = ''
-      [[ "$(tty)" == "/dev/tty1" ]] && exec Hyprland
+      [[ "$(tty)" == "/dev/tty1" ]] && exec uwsm start default 
     '';
   };
   
@@ -49,9 +49,12 @@
     enable = true;
   };
 
+  services.dunst = {
+    enable = true;
+  };
+
   home.packages = with pkgs; [
     polkit
-    dunst
     brave
     proton-pass
     protonvpn-gui

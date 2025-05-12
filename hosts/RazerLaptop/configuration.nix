@@ -49,6 +49,11 @@
     jack.enable = true;
   };
   
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+  };
+
   programs.zsh.enable = true;
   environment.shells = [ pkgs.zsh ];
   users.defaultUserShell = pkgs.zsh;
