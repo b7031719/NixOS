@@ -77,7 +77,6 @@ in
 
       exec-once = [
         "uwsm app -- waybar"
-        "dbus-update-activation-environment --systemd DISPLAY XAUTHORITY WAYLAND_DISPLAY XDG_SESSION_DESKTOP=Hyprland XDG_CURRENT_DESKTOP=Hyprland XDG_SESSION_TYPE=wayland"
 	"uwsm app -- dunst"
       ];
 
