@@ -1,13 +1,13 @@
-{ config, pkgs, inputs, ...}:
+{ pkgs, hyprland, ...}:
 let
-  hypr = inputs.hyprland.packages;
+  hypr = hyprland.packages;
 in
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    package = hypr.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    package = hypr.${pkgs.stdenv.hostPlatform.system}.hyprland;   # Use the most up to date package provided by the flake
     portalPackage = hypr.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-    xwayland.enable = true;
+    xwayland.enable = true;   # Enables backwards compatibility with X11 based apps
     settings = {
       
       # Define some application variables
@@ -77,8 +77,7 @@ in
 
       exec-once = [
         "uwsm app -- waybar"
-        "dbus-update-activation-environment --systemd DISPLAY XAUTHORITY WAYLAND_DISPLAY XDG_SESSION_DESKTOP=Hyprland XDG_CURRENT_DESKTOP=Hyprland XDG_SESSION_TYPE=wayland"
-	"uwsm app -- dunst"
+	"uwsm app -- dunst"   # Notification daemon
       ];
 
     };

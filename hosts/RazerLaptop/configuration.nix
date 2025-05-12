@@ -1,18 +1,18 @@
-{ inputs, pkgs, lib, config, ... }:
+{ pkgs, ... }:
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
-  boot.kernelParams = [ "video=1920x1080" ];
+  boot.kernelParams = [ "video=1920x1080" ];   # Set display resolution during boot
 
   boot.loader = {
     systemd-boot.enable = false;
     efi = {
-      canTouchEfiVariables = true;
+      canTouchEfiVariables = true;   # Allows the bootloader to modify efi variables
     };
     grub = { 
       enable = true;
-      device = "nodev";
+      device = "nodev";   # nodev required for UEFI booting
       efiSupport = true;
     };
   };
@@ -27,12 +27,7 @@
     extraGroups = [ "wheel" "networkmanager" "vboxsf" ];
   };
 
-  home-manager.users.b7 = import ../../users/b7/home.nix;
-  home-manager.extraSpecialArgs = { inherit inputs; };
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
- 
-  hardware.graphics = {
+  hardware.graphics = {   # Enable hardware graphics acceleration
     enable = true;
     enable32Bit = true;
   };
@@ -60,7 +55,7 @@
 
   console.keyMap = "uk";
   
-  environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];
+  environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];   # Create symlinks in the following locations
 
   environment.systemPackages = with pkgs; [
     neovim
@@ -69,7 +64,7 @@
     bolt
   ];
 
-  environment.sessionVariables = {
+  environment.sessionVariables = {   # Disables hardware graphics rendering and forces software rendering. Only required for vbox.
     LIBGL_ALWAYS_SOFTWARE = "1";
     GALLIUM_DRIVER = "llvmpipe";
   };
