@@ -78,6 +78,7 @@
     libreoffice
     librecad
     qelectrotech
+    discord
   ];
   
   home.sessionVariables = {
