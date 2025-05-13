@@ -12,22 +12,13 @@
   outputs = { self, nixpkgs, home-manager, hyprland, ...}@inputs: 
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-	config.allowUnfree = true;
-      };
     in {
       nixosConfigurations.RazerLaptop = nixpkgs.lib.nixosSystem {
-        specialArgs = { 
-	  inherit pkgs;
-	};
         modules = [ 
           ./hosts/RazerLaptop/configuration.nix
           ./hosts/RazerLaptop/hardware-configuration.nix
           home-manager.nixosModules.home-manager {
 	    home-manager.extraSpecialArgs = { 
-	      inherit pkgs;
-	      inherit home-manager;
 	      inherit hyprland;
 	    };
 	    home-manager.useGlobalPkgs = true;
