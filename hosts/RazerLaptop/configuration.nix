@@ -27,11 +27,6 @@
     extraGroups = [ "wheel" "networkmanager" "vboxsf" ];
   };
 
-  home-manager.users.b7 = import ../../users/b7/home.nix;
-  home-manager.extraSpecialArgs = { inherit inputs; };
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
- 
   hardware.graphics = {
     enable = true;
     enable32Bit = true;

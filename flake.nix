@@ -9,16 +9,32 @@
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, ...}@inputs: {
-    nixpkgs.config.allowUnfree = true;
-    nixosConfigurations.RazerLaptop = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs; };
+  outputs = { self, nixpkgs, home-manager, hyprland, ...}@inputs: 
+    let
       system = "x86_64-linux";
-      modules = [ 
-        home-manager.nixosModules.home-manager
-        ./hosts/RazerLaptop/configuration.nix
-	./hosts/RazerLaptop/hardware-configuration.nix
-      ];
+      pkgs = import nixpkgs {
+        inherit system;
+	config.allowUnfree = true;
+      };
+    in {
+      nixosConfigurations.RazerLaptop = nixpkgs.lib.nixosSystem {
+        specialArgs = { 
+	  inherit pkgs;
+	};
+        modules = [ 
+          ./hosts/RazerLaptop/configuration.nix
+          ./hosts/RazerLaptop/hardware-configuration.nix
+          home-manager.nixosModules.home-manager {
+	    home-manager.extraSpecialArgs = { 
+	      inherit pkgs;
+	      inherit home-manager;
+	      inherit hyprland;
+	    };
+	    home-manager.useGlobalPkgs = true;
+	    home-manager.useUserPackages = true;
+	    home-manager.users.b7 = ./users/b7/home.nix;
+  	  }
+        ];
+      };
     };
-  };
 }

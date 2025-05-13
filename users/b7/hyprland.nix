@@ -1,6 +1,6 @@
-{ config, pkgs, inputs, ...}:
+{ config, pkgs, hyprland, ...}:
 let
-  hypr = inputs.hyprland.packages;
+  hypr = hyprland.packages;
 in
 {
   wayland.windowManager.hyprland = {

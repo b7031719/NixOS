@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ...}:
+{ config, pkgs, ...}:
 
 {
   
@@ -49,6 +49,11 @@
     enable = true;
   };
 
+  programs.kodi = {
+    enable = true;
+    package = pkgs.kodi-wayland;
+  };
+
   services.dunst = {
     enable = true;
   };
@@ -65,6 +70,10 @@
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
     nerd-fonts.hack
+    vlc
+    libreoffice
+    librecad
+    qelectrotech
   ];
   
   home.sessionVariables = {
