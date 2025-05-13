@@ -1,13 +1,13 @@
-{ config, pkgs, hyprland, ...}:
+{ pkgs, hyprland, ...}:
 let
   hypr = hyprland.packages;
 in
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    package = hypr.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    package = hypr.${pkgs.stdenv.hostPlatform.system}.hyprland;   # Use the most up to date package provided by the flake
     portalPackage = hypr.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-    xwayland.enable = true;
+    xwayland.enable = true;   # Enables backwards compatibility with X11 based apps
     settings = {
       
       # Define some application variables
@@ -77,7 +77,7 @@ in
 
       exec-once = [
         "uwsm app -- waybar"
-	"uwsm app -- dunst"
+	"uwsm app -- dunst"   # Notification daemon
       ];
 
     };

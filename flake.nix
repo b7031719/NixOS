@@ -4,15 +4,15 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";   # pin home-manager package to nixpkgs for consistent versions
     hyprland.url = "github:hyprwm/Hyprland";
-    hyprland.inputs.nixpkgs.follows = "nixpkgs";
+    hyprland.inputs.nixpkgs.follows = "nixpkgs";   # pin hyprland package to nixpkgs for consistent versions
   };
 
   outputs = { self, nixpkgs, home-manager, hyprland, ...}@inputs: 
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs {
+      pkgs = import nixpkgs {        # pkgs created to set the allowUnfree config parameter
         inherit system;
 	config.allowUnfree = true;
       };
@@ -22,7 +22,7 @@
           ./hosts/RazerLaptop/configuration.nix
           ./hosts/RazerLaptop/hardware-configuration.nix
           home-manager.nixosModules.home-manager {
-	    home-manager.extraSpecialArgs = { 
+	    home-manager.extraSpecialArgs = {     # Inherit some outputs for use in home-manager modules
 	      inherit hyprland;
 	      inherit pkgs;
 	      inherit system;

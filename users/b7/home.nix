@@ -1,4 +1,4 @@
-{ config, pkgs, ...}:
+{ pkgs, ...}:
 
 {
   
@@ -11,8 +11,9 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     enableCompletion = true;
+    # Auto start the default compositor (hyprland) on login
     loginExtra = ''
-      [[ "$(tty)" == "/dev/tty1" ]] && exec uwsm start default 
+      [[ "$(tty)" == "/dev/tty1" ]] && exec uwsm start default
     '';
   };
   
@@ -28,11 +29,11 @@
     enable = true;
   };
 
-  programs.yazi = {
+  programs.yazi = {    # Terminal based file manager
     enable = true;
   };
 
-  fonts.fontconfig.enable = true;
+  fonts.fontconfig.enable = true;   # Allows kitty etc. to configure fonts.
   
   programs.git = {
     enable = true;
@@ -44,7 +45,7 @@
     enable = true;
   };
 
-  programs.rofi = {
+  programs.rofi = {   # Application launcher
     enable = true;
     package = pkgs.rofi-wayland;
   };
@@ -58,7 +59,7 @@
     package = pkgs.kodi-wayland;
   };
 
-  services.dunst = {
+  services.dunst = {   # Notification daemon
     enable = true;
   };
 
@@ -82,10 +83,10 @@
   ];
   
   home.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
+    NIXOS_OZONE_WL = "1";   # Try to force electron apps to use Wayland
     EDITOR = "nvim";
   };
 
-  home.stateVersion = "24.11";
+  home.stateVersion = "24.11";   # Do not change. Required for defining the original home-manager install version
 
 }
