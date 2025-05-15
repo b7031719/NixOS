@@ -45,9 +45,8 @@
     enable = true;
   };
 
-  programs.rofi = {   # Application launcher
+  programs.wofi = {   # Application launcher
     enable = true;
-    package = pkgs.rofi-wayland;
   };
 
   programs.tmux = {
@@ -72,6 +71,14 @@
     conda
     xdg-utils
     gtk3
+    gtk4
+    libsForQt5.qt5.qtbase
+    libsForQt5.qt5.qtwayland
+    noto-fonts
+    adwaita-icon-theme
+    adwaita-fonts
+    hicolor-icon-theme
+    gnome-themes-extra
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
     nerd-fonts.hack
