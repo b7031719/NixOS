@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -44,7 +44,23 @@
     jack.enable = true;
   };
 
-  services.greetd.enable = true;
+  services.greetd = let
+    hyprConfig = pkgs.writeFile "hyprland-regreet-config" ''
+      exec-once = regreet; hyprctl dispatch exit
+    '';
+  in {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${lib.getExe config.programs.hyprland.package}";
+        user = "b7";
+      };
+      initial_session = {
+        command = "${lib.getExe config.programs.hyprland.package} --config ${hyprConfig}";
+        user = "b7";
+      };
+    };
+  };
 
   programs.regreet = {
     enable = true;
