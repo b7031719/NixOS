@@ -11,10 +11,10 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     enableCompletion = true;
-    # Auto start the default compositor (hyprland) on login
-    loginExtra = ''
-      [[ "$(tty)" == "/dev/tty1" ]] && exec uwsm start default
-    '';
+   # # Auto start the default compositor (hyprland) on login
+   # loginExtra = ''
+   #   [[ "$(tty)" == "/dev/tty1" ]] && exec uwsm start default
+   # '';
   };
   
   programs.kitty = {
@@ -62,6 +62,10 @@
     enable = true;
   };
 
+  programs.regreet = {
+    enable = true;
+  };
+
   home.packages = with pkgs; [
     polkit
     brave
@@ -91,7 +95,7 @@
   
   home.sessionVariables = {
     NIXOS_OZONE_WL = "1";   # Try to force electron apps to use Wayland
-    EDITOR = "nvim";
+    EDITOR = "kitty -e nvim";
   };
 
   home.stateVersion = "24.11";   # Do not change. Required for defining the original home-manager install version
