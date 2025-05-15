@@ -44,23 +44,10 @@
     jack.enable = true;
   };
 
-  programs.regreet = let
-   hyprlandConf = ''
-     exec-once - regreet; hyprctl dispatch exit
-     misc {
-       disable_hyprland_logo = true
-       disable_splash_rendering = true
-       disable_hyprland_qtutils_check = true
-     }
-    '';
-  in {
+  services.greetd.enable = true;
+
+  programs.regreet = {
     enable = true;
-    settings = {
-      default_session = {
-        command = "Hyprland --config ${hyprlandConf}";
-        user = "b7";
-      };
-    };
   };
   
   programs.hyprland = {
