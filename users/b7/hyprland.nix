@@ -12,7 +12,7 @@ in
       
       # Define some application variables
       "$terminal" = "kitty";
-      "$menu" = "rofi -show drun";
+      "$menu" = "wofi -show drun";
       "$fileManager" = "kitty -e yazi";
 
       # Define the mod key binding
