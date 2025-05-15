@@ -11,10 +11,6 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     enableCompletion = true;
-   # # Auto start the default compositor (hyprland) on login
-   # loginExtra = ''
-   #   [[ "$(tty)" == "/dev/tty1" ]] && exec uwsm start default
-   # '';
   };
   
   programs.kitty = {
@@ -59,10 +55,6 @@
   };
 
   services.dunst = {   # Notification daemon
-    enable = true;
-  };
-
-  programs.regreet = {
     enable = true;
   };
 
