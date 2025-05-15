@@ -1,4 +1,4 @@
-{ pkgs, hyprland, ...}:
+{ config, pkgs, hyprland, ...}:
 let
   hypr = hyprland.packages;
 in
@@ -12,8 +12,9 @@ in
       
       # Define some application variables
       "$terminal" = "kitty";
-      "$menu" = "wofi -show drun";
+      "$menu" = "wofi --show drun";
       "$fileManager" = "kitty -e yazi";
+      "$editor" = "${config.home.sessionVariables.EDITOR}";
 
       # Define the mod key binding
       "$mainMod" = "SUPER";
@@ -40,6 +41,7 @@ in
 	"$mainMod, T, togglefloating,"
 	"$mainMod, E, exec, uwsm app -- $fileManager"
 	"$mainMod, F, fullscreen, 1"
+	"$mainMod, N, exec, uwsm app -- $editor"
 	"$mainMod SHIFT, F, fullscreen, 0"
         "$mainMod, left, movefocus, l"
         "$mainMod, right, movefocus, r"

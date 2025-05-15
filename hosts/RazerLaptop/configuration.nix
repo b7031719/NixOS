@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -42,6 +42,33 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
+  };
+
+  services.greetd = let
+   hyprlandConf = pkgs.writeText "hyprland-regreet-config" ''
+     exec-once = regreet; hyprctl dispatch exit
+     misc {
+       disable_hyprland_logo = true
+       disable_splash_rendering = true
+       disable_hyprland_qtutils_check = true
+     }
+    '';
+  in {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${lib.getExe config.programs.hyprland.package}";
+        user = "b7";
+      };
+      initial_session = {
+        command = "${lib.getExe config.programs.hyprland.package} --config ${hyprlandConf}";
+        user = "b7";
+      };
+    };
+  };
+
+  programs.regreet = {
+    enable = true;
   };
   
   programs.hyprland = {

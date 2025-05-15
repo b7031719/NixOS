@@ -11,10 +11,6 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     enableCompletion = true;
-    # Auto start the default compositor (hyprland) on login
-    loginExtra = ''
-      [[ "$(tty)" == "/dev/tty1" ]] && exec uwsm start default
-    '';
   };
   
   programs.kitty = {
@@ -70,15 +66,6 @@
     protonmail-desktop
     conda
     xdg-utils
-    gtk3
-    gtk4
-    libsForQt5.qt5.qtbase
-    libsForQt5.qt5.qtwayland
-    noto-fonts
-    adwaita-icon-theme
-    adwaita-fonts
-    hicolor-icon-theme
-    gnome-themes-extra
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
     nerd-fonts.hack
@@ -91,7 +78,7 @@
   
   home.sessionVariables = {
     NIXOS_OZONE_WL = "1";   # Try to force electron apps to use Wayland
-    EDITOR = "nvim";
+    EDITOR = "kitty -e nvim";
   };
 
   home.stateVersion = "24.11";   # Do not change. Required for defining the original home-manager install version
