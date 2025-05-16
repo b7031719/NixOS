@@ -16,11 +16,11 @@ pkgs.stdenv.mkDerivation {
     sha256 = "1sj9b381h6xpp336lq1by5qsa54chqcq37r8daqbp2igp8dh14";
   };
 
-  propagatedBuildInputs = with pkgs.kdePackages; {
+  propagatedBuildInputs = with pkgs.kdePackages; [
     qtsvg
     qtmultimedia
     qtvirtualkeyboard
-  };
+  ];
 
   installPhase = ''
     sed -i 's|^Background="Backgrounds/astronaut.png"$|Background="Backgrounds/bkgnd.png"|' $src/Themes/astronaut.conf
