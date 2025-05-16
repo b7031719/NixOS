@@ -45,8 +45,13 @@
   };
 
   services.greetd = let
-    hyprConfig = pkgs.writeFile "hyprland-regreet-config" ''
-      exec-once = regreet; hyprctl dispatch exit
+   hyprlandConf = pkgs.writeText "hyprland-regreet-config" ''
+     exec-once = regreet; hyprctl dispatch exit
+     misc {
+       disable_hyprland_logo = true
+       disable_splash_rendering = true
+       disable_hyprland_qtutils_check = true
+     }
     '';
   in {
     enable = true;
@@ -56,7 +61,7 @@
         user = "b7";
       };
       initial_session = {
-        command = "${lib.getExe config.programs.hyprland.package} --config ${hyprConfig}";
+        command = "${lib.getExe config.programs.hyprland.package} --config ${hyprlandConf}";
         user = "b7";
       };
     };
