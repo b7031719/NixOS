@@ -44,33 +44,6 @@
     jack.enable = true;
   };
 
-  services.greetd = let
-   hyprlandConf = pkgs.writeText "hyprland-regreet-config" ''
-     exec-once = regreet; hyprctl dispatch exit
-     misc {
-       disable_hyprland_logo = true
-       disable_splash_rendering = true
-       disable_hyprland_qtutils_check = true
-     }
-    '';
-  in {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${lib.getExe config.programs.hyprland.package}";
-        user = "b7";
-      };
-      initial_session = {
-        command = "${lib.getExe config.programs.hyprland.package} --config ${hyprlandConf}";
-        user = "b7";
-      };
-    };
-  };
-
-  programs.regreet = {
-    enable = true;
-  };
-  
   programs.hyprland = {
     enable = true;
     withUWSM = true;
@@ -79,6 +52,11 @@
   programs.zsh.enable = true;
   environment.shells = [ pkgs.zsh ];
   users.defaultUserShell = pkgs.zsh;
+
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+  };
 
   console.keyMap = "uk";
   
