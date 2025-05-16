@@ -1,11 +1,12 @@
 { pkgs }:
 
 let
-  bkgndLink = "https://github.com/b7031719/NixOS/tree/main/hosts/RazerLaptop/bkgnd.jpg";
+  bkgndLink = "https://github.com/b7031719/NixOS/tree/main/hosts/RazerLaptop/bkgnd.png";
   image = pkgs.fetchurl {
     url = bkgndLink;
-    sha256 = "03b6hz1y4xj79961lgmr2035jm41j6jv66c9j100jwgrygxa3l2g";
+    sha256 = "0557bsqa5xc8jbxg4kwfifc8gsn03ji9mkbhj10s2cy7jyvk0zdg";
   };
+in
 pkgs.stdenv.mkDerivation {
   name = "sddm-theme";
   src = pkgs.fetchFromGitHub {
@@ -14,15 +15,18 @@ pkgs.stdenv.mkDerivation {
     rev = "bf4d01732084be29cedefe9815731700da865956";
     sha256 = "1sj9b381h6xpp336lq1by5qsa54chqcq37r8daqbp2igp8dh14";
   };
-  propagatedBuildInputs = with pkgs.kdePackages; {
+
+  propagatedBuildInputs = with pkgs.kdePackages; [
     qtsvg
     qtmultimedia
     qtvirtualkeyboard
-  };
+  ];
+
   installPhase = ''
+    sed -i 's|^Background="Backgrounds/astronaut.png"$|Background="Backgrounds/bkgnd.png"|' $src/Themes/astronaut.conf
     mkdir -p $out
     mkdir -p $out/Backgrounds
     cp $image $out/Backgrounds
-    cp -r ./* $out/
+    cp -r $src/* $out/
   '';
 }
