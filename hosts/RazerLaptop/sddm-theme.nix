@@ -1,10 +1,10 @@
 { pkgs }:
 
 let
-  bkgndLink = "https://raw.githubusercontent.com/b7031719/NixOS/main/hosts/RazerLaptop/bkgnd.png";
-  image = pkgs.fetchurl {
+  bkgndLink = "https://raw.githubusercontent.com/b7031719/NixOS/main/hosts/RazerLaptop/bkgnd.mp4";
+  bkgnd = pkgs.fetchurl {
     url = bkgndLink;
-    sha256 = "0557bsqa5xc8jbxg4kwfifc8gsn03ji9mkbhj10s2cy7jyvk0zdg";
+    sha256 = "0snhwz9am48q2nxsahj9fm0d87ar77554l97s05ab7ig4b1lfdnx";
   };
   basePath = "$out/share/sddm/themes/sddm-astronaut-theme";
 in
@@ -19,30 +19,30 @@ pkgs.stdenvNoCC.mkDerivation {
 
   dontWrapQtApps = true;
 
-  propagatedBuildInputs = with pkgs.kdePackages; [
-    qtbase
-    qtdeclarative
-    qtquicktimeline
-    qtsvg
-    qtmultimedia
-    qtvirtualkeyboard
-  ];
+#  propagatedBuildInputs = with pkgs.kdePackages; [
+#    qtbase
+#    qtdeclarative
+#    qtquicktimeline
+#    qtsvg
+#    qtmultimedia
+#    qtvirtualkeyboard
+#  ];
 
   installPhase = ''
     mkdir -p ${basePath}
     cp -r * ${basePath}/
-    cp ${image} ${basePath}/Backgrounds/bkgnd.png
-    sed -i 's|^Background="Backgrounds/astronaut.png"$|Background="Backgrounds/bkgnd.png"|' ${basePath}/Themes/astronaut.conf
+    cp ${bkgnd} ${basePath}/Backgrounds/bkgnd.mp4
+    sed -i 's|^Background="Backgrounds/astronaut.png"$|Background="Backgrounds/bkgnd.mp4"|' ${basePath}/Themes/astronaut.conf
     install -dm755 "$out/share/fonts"
-    cp -r "$out/share/sddm/themes/sddm-astronaut-theme/Fonts/." "$out/share/fonts"
-    sed -i 's/^import QtMultimedia$/import QtMultimedia 6.8/' ${basePath}/Main.qml
   '';
 
+#    cp -r "$out/share/sddm/themes/sddm-astronaut-theme/Fonts/." "$out/share/fonts"
+#    sed -i 's/^import QtMultimedia$/import QtMultimedia 6.8/' ${basePath}/Main.qml
     # sed -i 's/^import QtQuick\.Effects$/import QtQuick.Effects 1.0/' ${basePath}/Main.qml
-  postFixup = ''
-    mkdir -p $out/nix-support
-    echo ${pkgs.kdePackages.qtsvg} >> $out/nix-support/propagated-user-env-packages
-    echo ${pkgs.kdePackages.qtmultimedia} >> $out/nix-support/propagated-user-env-packages
-    echo ${pkgs.kdePackages.qtvirtualkeyboard} >> $out/nix-support/propagated-user-env-packages
-  '';
+#  postFixup = ''
+#    mkdir -p $out/nix-support
+#    echo ${pkgs.kdePackages.qtsvg} >> $out/nix-support/propagated-user-env-packages
+#    echo ${pkgs.kdePackages.qtmultimedia} >> $out/nix-support/propagated-user-env-packages
+#    echo ${pkgs.kdePackages.qtvirtualkeyboard} >> $out/nix-support/propagated-user-env-packages
+#  '';
 }
