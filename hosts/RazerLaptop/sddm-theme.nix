@@ -6,6 +6,7 @@ let
     url = bkgndLink;
     sha256 = "0557bsqa5xc8jbxg4kwfifc8gsn03ji9mkbhj10s2cy7jyvk0zdg";
   };
+  basePath = "$out/share/sddm/themes/sddm-astronaut-theme";
 in
 pkgs.stdenv.mkDerivation {
   name = "sddm-theme";
@@ -24,11 +25,13 @@ pkgs.stdenv.mkDerivation {
     qtvirtualkeyboard
   ];
 
+  postPatch = ''
+    cp ${image} ./Backrounds
+    sed -i 's|^Background="Backgrounds/astronaut.png"$|Background="Backgrounds/bkgnd.png"|' ./Themes/astronaut.conf
+  '';
+
   installPhase = ''
-    sed -i 's|^Background="Backgrounds/astronaut.png"$|Background="Backgrounds/bkgnd.png"|' $src/Themes/astronaut.conf
-    mkdir -p $out
-    mkdir -p $out/Backgrounds
-    cp $image $out/Backgrounds
-    cp -r $src/* $out/
+    mkdir -p ${basePath};
+    cp -r * ${basePath}
   '';
 }
