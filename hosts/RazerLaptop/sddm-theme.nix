@@ -19,15 +19,6 @@ pkgs.stdenvNoCC.mkDerivation {
 
   dontWrapQtApps = true;
 
-#  propagatedBuildInputs = with pkgs.kdePackages; [
-#    qtbase
-#    qtdeclarative
-#    qtquicktimeline
-#    qtsvg
-#    qtmultimedia
-#    qtvirtualkeyboard
-#  ];
-
   installPhase = ''
     mkdir -p ${basePath}
     cp -r * ${basePath}/
@@ -36,13 +27,4 @@ pkgs.stdenvNoCC.mkDerivation {
     install -dm755 "$out/share/fonts"
   '';
 
-#    cp -r "$out/share/sddm/themes/sddm-astronaut-theme/Fonts/." "$out/share/fonts"
-#    sed -i 's/^import QtMultimedia$/import QtMultimedia 6.8/' ${basePath}/Main.qml
-    # sed -i 's/^import QtQuick\.Effects$/import QtQuick.Effects 1.0/' ${basePath}/Main.qml
-#  postFixup = ''
-#    mkdir -p $out/nix-support
-#    echo ${pkgs.kdePackages.qtsvg} >> $out/nix-support/propagated-user-env-packages
-#    echo ${pkgs.kdePackages.qtmultimedia} >> $out/nix-support/propagated-user-env-packages
-#    echo ${pkgs.kdePackages.qtvirtualkeyboard} >> $out/nix-support/propagated-user-env-packages
-#  '';
 }
