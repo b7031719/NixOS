@@ -58,18 +58,21 @@ in
   services.displayManager = {
     sddm = {
       enable = true;
+      package = pkgs.kdePackages.sddm;
       wayland.enable = true;
       theme = "sddm-astronaut-theme";
-      extraPackages = with pkgs; [
-        kdePackages.qtsvg
-	kdePackages.qtmultimedia
-	kdePackages.qtvirtualkeyboard
+      extraPackages = with pkgs.kdePackages; [
+        qtsvg
+	qtmultimedia
+	qtvirtualkeyboard
+	qt5compat
       ];
     };
     environment = {
       QML2_IMPORT_PATH = lib.makeSearchPath "qml" [
         pkgs.kdePackages.qtdeclarative
 	pkgs.kdePackages.qtmultimedia
+	pkgs.kdePackages.qt5compat
       ];
       QT_PLUGIN_PATH = lib.makeSearchPath "lib/qt-6/plugins" [
         pkgs.kdePackages.qtbase
