@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }:
-
+let
+  sddmTheme = import ./sddm-theme.nix { inherit pkgs; };
+in
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
@@ -56,18 +58,19 @@
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
-    theme = "${import ./sddm-theme.nix { inherit pkgs; }}";
+    theme = "sddm-astronaut-theme";
   };
 
   console.keyMap = "uk";
   
   environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];   # Create symlinks in the following locations
 
-  environment.systemPackages = with pkgs; [
-    neovim
-    git
-    wget
-    bolt
+  environment.systemPackages = [
+    pkgs.neovim
+    pkgs.git
+    pkgs.wget
+    pkgs.bolt
+    sddmTheme
   ];
 
   environment.sessionVariables = {   # Disables hardware graphics rendering and forces software rendering. Only required for vbox.
