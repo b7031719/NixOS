@@ -65,20 +65,20 @@ in
         qtsvg
 	qtmultimedia
 	qtvirtualkeyboard
-	qt5compat
+#	qt5compat
       ];
     };
-    environment = {
-      QML2_IMPORT_PATH = lib.makeSearchPath "qml" [
-        pkgs.kdePackages.qtdeclarative
-	pkgs.kdePackages.qtmultimedia
-	pkgs.kdePackages.qt5compat
-      ];
-      QT_PLUGIN_PATH = lib.makeSearchPath "lib/qt-6/plugins" [
-        pkgs.kdePackages.qtbase
-	pkgs.kdePackages.qtmultimedia
-      ];
-    };
+#    environment = {
+#      QML2_IMPORT_PATH = lib.makeSearchPath "qml" [
+#        pkgs.kdePackages.qtdeclarative
+#	pkgs.kdePackages.qtmultimedia
+#	pkgs.kdePackages.qt5compat
+#      ];
+#      QT_PLUGIN_PATH = lib.makeSearchPath "lib/qt-6/plugins" [
+#        pkgs.kdePackages.qtbase
+#	pkgs.kdePackages.qtmultimedia
+#      ];
+#    };
   };
 
   console.keyMap = "uk";
