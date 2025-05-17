@@ -4,7 +4,7 @@ let
   bkgndLink = "https://raw.githubusercontent.com/b7031719/NixOS/main/hosts/RazerLaptop/bkgnd.mp4";
   bkgnd = pkgs.fetchurl {
     url = bkgndLink;
-    sha256 = "0snhwz9am48q2nxsahj9fm0d87ar77554l97s05ab7ig4b1lfdnx";
+    sha256 = "1v57zhyijlkw1gg86f7nlibl2pl6cjj1p4iz49vyn268bq5r76s5";
   };
   basePath = "$out/share/sddm/themes/sddm-astronaut-theme";
 in
