@@ -55,10 +55,27 @@ in
   environment.shells = [ pkgs.zsh ];
   users.defaultUserShell = pkgs.zsh;
 
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
-    theme = "sddm-astronaut-theme";
+  services.displayManager = {
+    sddm = {
+      enable = true;
+      wayland.enable = true;
+      theme = "sddm-astronaut-theme";
+      extraPackages = with pkgs; [
+        kdePackages.qtsvg
+	kdePackages.qtmultimedia
+	kdePackages.qtvirtualkeyboard
+      ];
+    };
+    environment = {
+      QML2_IMPORT_PATH = lib.makeSearchPath "qml" [
+        pkgs.kdePackages.qtdeclarative
+	pkgs.kdePackages.qtmultimedia
+      ];
+      QT_PLUGIN_PATH = lib.makeSearchPath "lib/qt-6/plugins" [
+        pkgs.kdePackages.qtbase
+	pkgs.kdePackages.qtmultimedia
+      ];
+    };
   };
 
   console.keyMap = "uk";

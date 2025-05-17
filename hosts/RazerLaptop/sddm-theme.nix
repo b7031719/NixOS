@@ -20,6 +20,9 @@ pkgs.stdenvNoCC.mkDerivation {
   dontWrapQtApps = true;
 
   propagatedBuildInputs = with pkgs.kdePackages; [
+    qtbase
+    qtdeclarative
+    qtquicktimeline
     qtsvg
     qtmultimedia
     qtvirtualkeyboard
