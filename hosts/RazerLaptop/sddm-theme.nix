@@ -13,8 +13,10 @@ pkgs.stdenv.mkDerivation {
     owner = "Keyitdev";
     repo = "sddm-astronaut-theme";
     rev = "bf4d01732084be29cedefe9815731700da865956";
-    sha256 = "1sj9b381h6xpp336lq1by5qsa54chqcq37r8daqbp2igp8dh14";
+    sha256 = "1sj9b381gh6xpp336lq1by5qsa54chqcgq37r8daqbp2igp8dh14";
   };
+
+  dontWrapQtApps = true;
 
   propagatedBuildInputs = with pkgs.kdePackages; [
     qtsvg
