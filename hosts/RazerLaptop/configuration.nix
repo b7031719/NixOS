@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }:
-
+let
+  sddmTheme = import ./sddm-theme.nix { inherit pkgs; };
+in
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
@@ -53,21 +55,42 @@
   environment.shells = [ pkgs.zsh ];
   users.defaultUserShell = pkgs.zsh;
 
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
-    theme = "${import ./sddm-theme.nix { inherit pkgs; }}";
+  services.displayManager = {
+    sddm = {
+      enable = true;
+      package = pkgs.kdePackages.sddm;
+      wayland.enable = true;
+      theme = "sddm-astronaut-theme";
+      extraPackages = with pkgs.kdePackages; [
+        qtsvg
+	qtmultimedia
+	qtvirtualkeyboard
+	qt5compat
+      ];
+    };
+    environment = {
+      QML2_IMPORT_PATH = lib.makeSearchPath "qml" [
+        pkgs.kdePackages.qtdeclarative
+	pkgs.kdePackages.qtmultimedia
+	pkgs.kdePackages.qt5compat
+      ];
+      QT_PLUGIN_PATH = lib.makeSearchPath "lib/qt-6/plugins" [
+        pkgs.kdePackages.qtbase
+	pkgs.kdePackages.qtmultimedia
+      ];
+    };
   };
 
   console.keyMap = "uk";
   
   environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];   # Create symlinks in the following locations
 
-  environment.systemPackages = with pkgs; [
-    neovim
-    git
-    wget
-    bolt
+  environment.systemPackages = [
+    pkgs.neovim
+    pkgs.git
+    pkgs.wget
+    pkgs.bolt
+    sddmTheme
   ];
 
   environment.sessionVariables = {   # Disables hardware graphics rendering and forces software rendering. Only required for vbox.
