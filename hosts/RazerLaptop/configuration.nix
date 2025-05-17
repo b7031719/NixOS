@@ -58,27 +58,15 @@ in
   services.displayManager = {
     sddm = {
       enable = true;
-      package = pkgs.kdePackages.sddm;
+      package = pkgs.kdePackages.sddm;   # required to prevent version error
       wayland.enable = true;
       theme = "sddm-astronaut-theme";
       extraPackages = with pkgs.kdePackages; [
         qtsvg
 	qtmultimedia
 	qtvirtualkeyboard
-#	qt5compat
       ];
     };
-#    environment = {
-#      QML2_IMPORT_PATH = lib.makeSearchPath "qml" [
-#        pkgs.kdePackages.qtdeclarative
-#	pkgs.kdePackages.qtmultimedia
-#	pkgs.kdePackages.qt5compat
-#      ];
-#      QT_PLUGIN_PATH = lib.makeSearchPath "lib/qt-6/plugins" [
-#        pkgs.kdePackages.qtbase
-#	pkgs.kdePackages.qtmultimedia
-#      ];
-#    };
   };
 
   console.keyMap = "uk";
