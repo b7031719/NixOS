@@ -7,9 +7,11 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";   # pin home-manager package to nixpkgs for consistent versions
     hyprland.url = "github:hyprwm/Hyprland";
     hyprland.inputs.nixpkgs.follows = "nixpkgs";   # pin hyprland package to nixpkgs for consistent versions
+    hyprlock.url = "github:hyprwm/hyprlock";
+    hyprlock.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, ...}@inputs: 
+  outputs = { self, nixpkgs, home-manager, hyprland, hyprlock, ...}@inputs: 
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {        # pkgs created to set the allowUnfree config parameter
@@ -26,6 +28,7 @@
 	      inherit hyprland;
 	      inherit pkgs;
 	      inherit system;
+	      inherit hyprlock;
 	    };
 	    home-manager.useGlobalPkgs = true;
 	    home-manager.useUserPackages = true;

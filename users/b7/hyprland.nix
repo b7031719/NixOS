@@ -42,6 +42,7 @@ in
 	"$mainMod, E, exec, uwsm app -- $fileManager"
 	"$mainMod, F, fullscreen, 1"
 	"$mainMod, N, exec, uwsm app -- $editor"
+	"$mainMod, L, exec, hyprlock"
 	"$mainMod SHIFT, F, fullscreen, 0"
         "$mainMod, left, movefocus, l"
         "$mainMod, right, movefocus, r"
