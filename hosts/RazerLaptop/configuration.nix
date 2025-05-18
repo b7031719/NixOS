@@ -1,7 +1,5 @@
 { config, lib, pkgs, ... }:
-let
-  sddmTheme = import ./sddm-theme.nix { inherit pkgs; };
-in
+
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
@@ -27,6 +25,11 @@ in
   users.users.b7 = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "vboxsf" ];
+  };
+
+  services.getty.autologin = {   # autologin as b7
+    enable = true;
+    user = "b7";
   };
 
   hardware.graphics = {   # Enable hardware graphics acceleration
@@ -55,30 +58,15 @@ in
   environment.shells = [ pkgs.zsh ];
   users.defaultUserShell = pkgs.zsh;
 
-  services.displayManager = {
-    sddm = {
-      enable = true;
-      package = pkgs.kdePackages.sddm;   # required to prevent version error
-      wayland.enable = true;
-      theme = "sddm-astronaut-theme";
-      extraPackages = with pkgs.kdePackages; [
-        qtsvg
-	qtmultimedia
-	qtvirtualkeyboard
-      ];
-    };
-  };
-
   console.keyMap = "uk";
   
   environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];   # Create symlinks in the following locations
 
-  environment.systemPackages = [
-    pkgs.neovim
-    pkgs.git
-    pkgs.wget
-    pkgs.bolt
-    sddmTheme
+  environment.systemPackages = with pkgs; [
+    neovim
+    git
+    wget
+    bolt
   ];
 
   environment.sessionVariables = {   # Disables hardware graphics rendering and forces software rendering. Only required for vbox.
