@@ -2,7 +2,10 @@
 
 {
   
-  imports = [ ./hyprland.nix ];
+  imports = [
+    ./hyprland.nix
+    ./hyprlock.nix
+  ];
 
   programs.home-manager.enable = true;
 
