@@ -1,6 +1,6 @@
 { pkgs, hyprlock, ...}:
 let
-  hyprl = hyprlock.packages
+  hyprl = hyprlock.packages;
 in
 {
 
