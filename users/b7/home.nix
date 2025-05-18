@@ -13,6 +13,12 @@
     enableCompletion = true;
   };
   
+  home.file.".zprofile".text = ''
+    if [[ -z $DISPLAY ]] && [[ $(tty) == /dev/tty1 ]]; then
+      uwsm start default
+    fi
+  '';
+  
   programs.kitty = {
     enable = true;
     settings = {
