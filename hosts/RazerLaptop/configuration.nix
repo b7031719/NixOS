@@ -27,9 +27,9 @@
     extraGroups = [ "wheel" "networkmanager" "vboxsf" ];
   };
 
-  services.getty.autologin = {   # autologin as b7
-    enable = true;
-    user = "b7";
+  services.getty = {   # autologin as b7
+    autologinUser = "b7";
+    autologinOnce = true;
   };
 
   hardware.graphics = {   # Enable hardware graphics acceleration
