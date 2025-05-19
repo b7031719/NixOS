@@ -79,6 +79,7 @@ in
       monitor = [ ",preferred,auto,1" ];
 
       exec-once = [
+	"hyprlock --immediate"
         "uwsm app -- waybar"
 	"uwsm app -- dunst"   # Notification daemon
       ];
