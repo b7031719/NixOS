@@ -63,7 +63,6 @@
   environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];   # Create symlinks in the following locations
 
   environment.systemPackages = with pkgs; [
-    neovim
     git
     wget
     bolt
