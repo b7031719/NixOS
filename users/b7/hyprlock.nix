@@ -12,8 +12,6 @@ programs.hyprlock = {
 
   settings = {
 
-    "$font" = "Jet Brains Mono Nerd Font";
-
     general = {
       hide_cursor = true;
       no_fade_in = false;
@@ -31,7 +29,7 @@ programs.hyprlock = {
 
     background = {
       monitor = [ "" ];
-      path = "screenshot";
+#      path = "screenshot";
       blur_passes = 3;
     };
 
@@ -46,9 +44,8 @@ programs.hyprlock = {
       font_color = "rgb(143, 143, 143)";
       fade_on_empty = false;
       rounding = 15;
-      font_family = "$font";
+      font_family = "JetBrainsMono Nerd Font";
       placeholder_text = "Input password...";
-      fail_text = "$PAMFAIL";
       dots_spacing = 0.3;
       position = "0, -20";
       halign = "center";
@@ -61,7 +58,7 @@ programs.hyprlock = {
         cmd[update:60000] date +"%A, %d %B %Y"
       ''; # update every 60 seconds
       font_size = 25;
-      font_family = "$font";
+      font_family = "JetBrainsMono Nerd Font";
       position = "-30, -150";
       halign = "right";
       valign = "top";
