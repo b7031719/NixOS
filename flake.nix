@@ -19,22 +19,47 @@
 	config.allowUnfree = true;
       };
     in {
+#      nixosConfigurations.RazerLaptop = nixpkgs.lib.nixosSystem {
+#        modules = [ 
+#          ./hosts/RazerLaptop/configuration.nix
+#          ./hosts/RazerLaptop/hardware-configuration.nix
+#          home-manager.nixosModules.home-manager {
+#	    home-manager.extraSpecialArgs = {     # Inherit some outputs for use in home-manager modules
+#	      inherit hyprland;
+#	      inherit pkgs;
+#	      inherit system;
+#	      inherit hyprlock;
+#	    };
+#	    home-manager.useGlobalPkgs = true;
+#	    home-manager.useUserPackages = true;
+#	    home-manager.users.b7 = ./users/b7/home.nix;
+#  	  }
+#        ];
+#      };
+
+      # NIXOS SYSTEM CONFIGURATION
       nixosConfigurations.RazerLaptop = nixpkgs.lib.nixosSystem {
-        modules = [ 
-          ./hosts/RazerLaptop/configuration.nix
-          ./hosts/RazerLaptop/hardware-configuration.nix
-          home-manager.nixosModules.home-manager {
-	    home-manager.extraSpecialArgs = {     # Inherit some outputs for use in home-manager modules
-	      inherit hyprland;
-	      inherit pkgs;
-	      inherit system;
-	      inherit hyprlock;
-	    };
-	    home-manager.useGlobalPkgs = true;
-	    home-manager.useUserPackages = true;
-	    home-manager.users.b7 = ./users/b7/home.nix;
-  	  }
-        ];
+        modules = [
+	  ./hosts/RazerLaptop/configuration.nix
+	  ./hosts/RazerLaptop/hardware-configuration.nix
+	];
+	specialArgs = { inherit pkgs; };
       };
+      
+
+      # HOME-MANAGER CONFIGURATION (STANDALONE)
+      homeManagerConfigurations = { 
+        b7 = home-manager.lib.homeManagerConfiguration {
+          home.username = "b7";
+  	  home.homeDirectory = "/home/b7";
+  	  modules = [ ./users/b7/home.nix ];
+  	  extraSpecialArgs = {
+  	    inherit pkgs;
+  	    inherit hyprland;
+  	    inherit hyprlock;
+  	  };
+	};
+      };
+
     };
 }
