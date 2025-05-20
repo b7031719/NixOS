@@ -6,14 +6,20 @@
     ./hyprland.nix
     ./hyprlock.nix
   ];
+  
+  home.username = "b7";
+  home.homeDirectory = "/home/b7";
 
   programs.home-manager.enable = true;
 
   programs.zsh = {
-    enable = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     enableCompletion = true;
+  };
+
+  programs.neovim = {
+    enable = true;
   };
   
   home.file.".zprofile".text = ''
