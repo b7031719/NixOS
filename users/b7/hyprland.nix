@@ -79,7 +79,7 @@ in
       monitor = [ ",preferred,auto,1" ];
 
       exec-once = [
-	"hyprlock --immediate"
+	"hyprlock --immediate"   # Lock screen immediately on startup (getty autologin enabled)
         "uwsm app -- waybar"
 	"uwsm app -- dunst"   # Notification daemon
       ];
