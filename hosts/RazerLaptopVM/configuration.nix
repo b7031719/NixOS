@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
+  nixpkgs.config.allowUnfree = true;
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
   boot.kernelParams = [ "video=1920x1080" ];   # Set display resolution during boot
@@ -17,7 +19,7 @@
     };
   };
   
-  networking.hostName = "RazerLaptop"; 
+  networking.hostName = "RazerLaptopVM";
   networking.networkmanager.enable = true;
   
   time.timeZone = "Europe/London";

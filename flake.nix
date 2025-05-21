@@ -21,12 +21,12 @@
     in {
 
       # NIXOS SYSTEM CONFIGURATION
-      nixosConfigurations.RazerLaptop = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.RazerLaptopVM = nixpkgs.lib.nixosSystem {
+	inherit system;
         modules = [
-	  ./hosts/RazerLaptop/configuration.nix
-	  ./hosts/RazerLaptop/hardware-configuration.nix
+	  ./hosts/RazerLaptopVM/configuration.nix
+	  ./hosts/RazerLaptopVM/hardware-configuration.nix
 	];
-	specialArgs = { inherit pkgs; };
       };
       
 
@@ -36,9 +36,7 @@
 	  inherit pkgs;
   	  modules = [ ./users/b7/home.nix ];
   	  extraSpecialArgs = {
-  	    inherit pkgs;
-  	    inherit hyprland;
-  	    inherit hyprlock;
+  	    inherit hyprland hyprlock;
   	  };
 	};
       };
