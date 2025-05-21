@@ -10,7 +10,7 @@
   boot.loader = {
     systemd-boot.enable = false;
     efi = {
-      canTouchEfiVariables = true;   # Allows the bootloader to modify efi variables
+      canTouchEfiVariables = true;   # Allows the bootloader to modify efi variables e.g. add boot entry into NVRAM
     };
     grub = { 
       enable = true;
@@ -53,7 +53,7 @@
 
   programs.hyprland = {
     enable = true;
-    withUWSM = true;
+    withUWSM = true;   # For Wayland session management and prevent apps from running as child processes to hyprland
   };
 
   programs.zsh.enable = true;
