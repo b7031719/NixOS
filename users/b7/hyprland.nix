@@ -81,7 +81,6 @@ in
       exec-once = [
 	"hyprlock --immediate"   # Lock screen immediately on startup (getty autologin enabled)
         "uwsm app -- waybar"
-	"uwsm app -- dunst"   # Notification daemon
       ];
 
     };
