@@ -32,13 +32,9 @@
   programs.kitty = {
     enable = true;
     settings = {
-      font_family = "JetBrains Mono Nerd Font";
+      font_family = "Caskaydia Code Nerd Font";
       font_size = 12;
     };
-  };
-
-  programs.vscode = {
-    enable = true;
   };
 
   programs.yazi = {    # Terminal based file manager
@@ -82,9 +78,7 @@
     protonmail-desktop
     conda
     xdg-utils
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.fira-code
-    nerd-fonts.hack
+    nerd-fonts.caskaydia-cove
     vlc
     libreoffice
     librecad
