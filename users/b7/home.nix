@@ -32,7 +32,7 @@
   programs.kitty = {
     enable = true;
     settings = {
-      font_family = "Caskaydia Code Nerd Font";
+      font_family = "Caskaydia Cove Nerd Font";
       font_size = 12;
     };
   };
