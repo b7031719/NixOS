@@ -18,19 +18,18 @@
     };
   };
   
-  networking.hostName = "RazerLaptopVM";
-  networking.networkmanager.enable = true;
+  networking = {
+    networkmanager.enable = true;
+  };
   
   time.timeZone = "Europe/London";
   
-  users.users.b7 = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "vboxsf" ];
-  };
-
-  services.getty = {   # autologin as b7
-    autologinUser = "b7";
-    autologinOnce = true;
+  users = {
+    users.b7 = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" "networkmanager" "vboxsf" ];
+    };
+    defaultUserShell = pkgs.zsh;
   };
 
   hardware.graphics = {   # Enable hardware graphics acceleration
@@ -39,39 +38,45 @@
   };
 
   i18n.defaultLocale = "en_GB.UTF-8";
-  
-  # Sound configuration
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-  };
-
-  programs.hyprland = {
-    enable = true;
-    withUWSM = true;   # For Wayland session management and prevent apps from running as child processes to hyprland
-  };
-
-  programs.zsh.enable = true;
-  environment.shells = [ pkgs.zsh ];
-  users.defaultUserShell = pkgs.zsh;
 
   console.keyMap = "uk";
   
-  environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];   # Create symlinks in the following locations
+  security.rtkit.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    bolt
-  ];
+  services = {
+    # Sound configuration
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      jack.enable = true;
+    };
+    # Autologin
+    getty = {
+      autologinUser = "b7";
+      autologinOnce = true;
+    };
+  };
 
-  environment.sessionVariables = {   # Disables hardware graphics rendering and forces software rendering. Only required for vbox.
-    LIBGL_ALWAYS_SOFTWARE = "1";
-    GALLIUM_DRIVER = "llvmpipe";
+  programs = {
+    hyprland = {
+      enable = true;
+      withUWSM = true;   # For Wayland session management and prevent apps from running as child processes to hyprland
+    };
+    zsh.enable = true;
   };
   
+  environment = {
+    pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];   # Create symlinks in the following locations
+    shells = with pkgs; [
+      zsh
+    ];
+    systemPackages = with pkgs; [
+      bolt
+    ];
+  };
+
   system.stateVersion = "24.11";
   
 }
