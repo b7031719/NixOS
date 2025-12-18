@@ -22,7 +22,7 @@
 
       # NIXOS SYSTEM CONFIGURATION
       nixosConfigurations.RazerLaptopVM = nixpkgs.lib.nixosSystem {
-	inherit system;
+	inherit system pkgs;
         modules = [
 	  ./hosts/RazerLaptopVM/configuration.nix
 	  ./hosts/RazerLaptopVM/hardware-configuration.nix
