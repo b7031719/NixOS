@@ -37,10 +37,4 @@
   # networking.interfaces.enp0s3.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  virtualisation.virtualbox.guest.enable = true;
-  
-  environment.sessionVariables = {   # Disables hardware graphics rendering and forces software rendering. Only required for vbox.
-    LIBGL_ALWAYS_SOFTWARE = "1";
-    GALLIUM_DRIVER = "llvmpipe";
-  };  
 }
