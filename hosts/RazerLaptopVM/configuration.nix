@@ -5,24 +5,12 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
   boot.kernelParams = [ "video=1920x1080" ];   # Set display resolution during boot
-
-  boot.loader = {
-    systemd-boot.enable = false;
-    efi = {
-      canTouchEfiVariables = true;   # Allows the bootloader to modify efi variables e.g. add boot entry into NVRAM
-    };
-    grub = { 
-      enable = true;
-      device = "nodev";   # nodev required for UEFI booting
-      efiSupport = true;
-    };
-  };
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
   
   networking = {
     networkmanager.enable = true;
   };
-  
-  time.timeZone = "Europe/London";
   
   users = {
     users.b7 = {
@@ -37,8 +25,9 @@
     enable32Bit = true;
   };
 
+  # Locale settings
+  time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
-
   console.keyMap = "uk";
   
   security.rtkit.enable = true;
@@ -73,6 +62,7 @@
       zsh
     ];
     systemPackages = with pkgs; [
+					sbctl
       bolt
     ];
   };
