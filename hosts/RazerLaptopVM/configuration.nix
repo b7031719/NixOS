@@ -67,6 +67,13 @@
     ];
   };
 
+  virtualisation.virtualbox.guest.enable = true;
+
+  environment.sessionVariables = {   # Disables hardware graphics rendering and forces software rendering. Only required for vbox.
+    LIBGL_ALWAYS_SOFTWARE = "1";
+    GALLIUM_DRIVER = "llvmpipe";
+  };
+
   system.stateVersion = "24.11";
   
 }
