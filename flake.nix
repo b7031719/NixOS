@@ -13,16 +13,14 @@
 
   outputs = { self, nixpkgs, home-manager, hyprland, hyprlock, ...}@inputs: 
     let
-      system = "x86_64-linux";
       pkgs = import nixpkgs {        # pkgs created to set the allowUnfree config parameter
-        inherit system;
-	config.allowUnfree = true;
+        config.allowUnfree = true;
       };
     in {
 
       # NIXOS SYSTEM CONFIGURATION
       nixosConfigurations.RazerLaptopVM = nixpkgs.lib.nixosSystem {
-	inherit system pkgs;
+	inherit pkgs;
         modules = [
 	  ./hosts/RazerLaptopVM/configuration.nix
 	  ./hosts/RazerLaptopVM/hardware-configuration.nix
