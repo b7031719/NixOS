@@ -62,7 +62,7 @@
       zsh
     ];
     systemPackages = with pkgs; [
-					sbctl
+      sbctl
       bolt
     ];
   };
