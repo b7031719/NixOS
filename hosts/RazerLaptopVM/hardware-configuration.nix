@@ -26,7 +26,7 @@
 
   swapDevices = [
     {
-      device = "/dev/disk/by-uuid/a545e296-bc02-4a1f-82f2-36c9a47edd30";
+      device = "/dev/sda3";
       randomEncryption.enable = true;
     }
   ];
