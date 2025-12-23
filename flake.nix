@@ -13,8 +13,9 @@
 
   outputs = { self, nixpkgs, home-manager, hyprland, hyprlock, ...}@inputs: 
     let
+      system = "x86_64-linux";
       pkgs = import nixpkgs {        # pkgs created to set the allowUnfree config parameter
-	system = "x86_64-linux";
+        inherit system;
         config.allowUnfree = true;
       };
     in {
