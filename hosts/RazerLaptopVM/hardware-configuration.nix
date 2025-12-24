@@ -21,12 +21,12 @@
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/65A2-F2FA";
       fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
+      options = [ "fmask=0077" "dmask=0077" ];
     };
 
   swapDevices = [
     {
-      device = "/dev/disk/by-uuid/0fdb4415-f4b8-4a60-b966-8bf226e9d3ba";
+      device = "/dev/sda2";
       randomEncryption.enable = true;
     }
   ];
