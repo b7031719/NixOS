@@ -45,8 +45,12 @@
   
   programs.git = {
     enable = true;
-    userName = "b7";
-    userEmail = "danfenton@pm.me";
+    settings = {
+      user = {
+        name = "b7";
+        email = "danfenton@pm.me";
+      };
+    };
   };
 
   programs.waybar = {
