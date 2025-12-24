@@ -74,8 +74,8 @@
     enable = true;
   };
 
-  programs.ssh = {
-    startAgent = true;
+  servoces.ssh-agent = {
+    enable = true;
   };
 
   home.packages = with pkgs; [
