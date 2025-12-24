@@ -33,7 +33,7 @@
       # HOME-MANAGER CONFIGURATION (STANDALONE)
       homeConfigurations = { 
         b7 = home-manager.lib.homeManagerConfiguration {
-	  inherit system pkgs;
+	  inherit pkgs;
   	  modules = [ ./users/b7/home.nix ];
   	  extraSpecialArgs = {
   	    inherit hyprland hyprlock;
