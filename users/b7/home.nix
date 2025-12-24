@@ -74,7 +74,7 @@
     enable = true;
   };
 
-  servoces.ssh-agent = {
+  services.ssh-agent = {
     enable = true;
   };
 
