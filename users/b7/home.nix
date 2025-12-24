@@ -74,6 +74,10 @@
     enable = true;
   };
 
+  programs.ssh = {
+    startAgent = true;
+  };
+
   home.packages = with pkgs; [
     polkit
     brave
