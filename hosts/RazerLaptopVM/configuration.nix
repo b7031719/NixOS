@@ -5,8 +5,17 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
   boot.kernelParams = [ "video=1920x1080" ];   # Set display resolution during boot
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/var/lib/sbctl";
+    autoGenerateKeys.enable = true;
+    autoEnrollKeys = {
+      enable = true;
+      autoReboot = true;
+    };
+  };
   
   networking = {
     networkmanager.enable = true;
