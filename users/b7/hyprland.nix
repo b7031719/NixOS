@@ -5,8 +5,8 @@ in
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    package = hypr.${pkgs.stdenv.hostPlatform.system}.hyprland;   # Use the most up to date package provided by the flake
-    portalPackage = hypr.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+    package = null;    # Use the package provided in environment packages
+    portalPackage = null;
     xwayland.enable = true;   # Enables backwards compatibility with X11 based apps
     settings = {
       
