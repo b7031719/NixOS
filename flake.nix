@@ -34,19 +34,20 @@
       nixosConfigurations = {
         RazerLaptopVM = nixpkgs.lib.nixosSystem {
           inherit system pkgs;
+          specialArgs = { inherit inputs; };
           modules = [
             ./hosts/RazerLaptopVM/configuration.nix
             ./hosts/RazerLaptopVM/hardware-configuration.nix
-          inputs.lanzaboote.nixosModules.lanzaboote
+            inputs.lanzaboote.nixosModules.lanzaboote
           ];
         };
 
         RazerLaptop = nixpkgs.lib.nixosSystem {
           inherit system pkgs;
+          specialArgs = { inherit inputs; };
           modules = [
             ./hosts/RazerLaptop/configuration.nix
             ./hosts/RazerLaptop/hardware-configuration.nix
-          inputs.lanzaboote.nixosModules.lanzaboote
           ];
         };
       };
