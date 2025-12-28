@@ -14,10 +14,13 @@
   users = {
     users.b7 = {
       isNormalUser = true;
+      initialPassword = "nix1";
       extraGroups = [ "wheel" "networkmanager" ];
     };
     defaultUserShell = pkgs.zsh;
   };
+
+  users.users.root.initialPassword = "nix1";
 
   hardware.graphics = {   # Enable hardware graphics acceleration
     enable = true;
