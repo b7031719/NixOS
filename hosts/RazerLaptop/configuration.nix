@@ -4,6 +4,11 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
+  boot.initrd.systemd = {
+    enable = true;
+    tpm2.enable = true;
+  };
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   
@@ -35,6 +40,7 @@
   security = {
     rtkit.enable = true;
     polkit.enable = true;
+    tpm2.enable = true;
   };
 
   services = {
