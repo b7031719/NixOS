@@ -1,5 +1,8 @@
 { pkgs, ...}:
-
+let
+  nvimConfigPath = "${config.home.homeDirectory}/dotfiles/Neovim";
+  repoUrl = "git@github.com:b7031719/Neovim.git";
+in
 {
   
   imports = [
@@ -21,7 +24,41 @@
 
   programs.neovim = {
     enable = true;
+
+    extraPackages = with pkgs; [
+      # LSPs
+      sumneko-lua-language-server
+      pyright
+      nodePackages.typescript-language-server
+      nodePackages.bash-language-server
+      nodePackages.vscode-langservers-extracted
+
+      # Formatters
+      black          # Python
+      isort          # Python import sorter and formatter
+      prettier       # JS/TS/HTML/CSS
+      stylua         # Lua
+      shfmt          # Bash/shell
+      alejandra      # Nix
+
+      # Linters/diagnostics
+      shellcheck     # Bash
+      eslint         # JS/TS
+      flake8         # Python
+      statix         # Nix static analysis
+    ];
   };
+
+  # Creates a symlink in the nix store to the Neovim configuration directory from the dotfiles directory
+  xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink nvimConfigPath;
+  xdg.configFile."nvim".recursive = true;
+
+  # Activation script: Clone the repo if the directory doesn't exist
+  home.activation.cloneNvimConfig =
+    lib.hm.dag.entryAfter ["writeBoundary"] ''
+      $DRY_RUN_CMD [ -d "${nvimConfigPath}/.git" ] || \
+        ${pkgs.git}/bin/git clone ${repoUrl} "${nvimConfigPath}"
+    '';
   
   home.file.".zprofile".text = ''
     if [[ -z $DISPLAY ]] && [[ $(tty) == /dev/tty1 ]]; then
