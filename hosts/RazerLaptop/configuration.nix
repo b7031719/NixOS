@@ -49,8 +49,8 @@
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
-      pulse.enable = true;
-      jack.enable = true;
+      pulse.enable = true;    # Provides a legacy API for supporting legacy PulseAudio apps
+      jack.enable = true;     # Provices a legacy API for supporting legacy JACK apps
     };
     # Autologin
     getty = {
@@ -62,7 +62,7 @@
   programs = {
     hyprland = {
       enable = true;
-      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;      # Use package provided by flake
       portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
       withUWSM = true;   # For Wayland session management and prevent apps from running as child processes to hyprland
     };
