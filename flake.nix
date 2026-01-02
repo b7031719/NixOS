@@ -19,6 +19,10 @@
       url = "github:hyprwm/hyprlock";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, hyprland, hyprlock, ...}@inputs: 
@@ -39,6 +43,7 @@
             ./hosts/RazerLaptopVM/configuration.nix
             ./hosts/RazerLaptopVM/hardware-configuration.nix
             inputs.lanzaboote.nixosModules.lanzaboote
+            inputs.sops-nix.nixosModules.sops
           ];
         };
 
@@ -48,6 +53,7 @@
           modules = [
             ./hosts/RazerLaptop/configuration.nix
             ./hosts/RazerLaptop/hardware-configuration.nix
+            inputs.sops-nix.nixosModules.sops
           ];
         };
       };
