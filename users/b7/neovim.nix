@@ -14,6 +14,7 @@ in
       nodePackages.typescript-language-server
       nodePackages.bash-language-server
       nodePackages.vscode-langservers-extracted
+      nixd
 
       # Formatters
       black          # Python
