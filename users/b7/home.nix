@@ -88,6 +88,7 @@
     librecad
     qelectrotech
     discord
+    gcc
   ];
   
   home.sessionVariables = {
