@@ -3,3 +3,4 @@ creation_rules:
     key_groups:
       - age:
         - age1k3yx2ry60p3wz6wy4ugwdn9wuhcr0zw5rs3ptlejre2jeax4kqzsez8uwa
+        - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOQd/ZysAUTY4zWJToqLD5VIlezJWWxYiwbs0iPIMMqO danfenton@pm.me
