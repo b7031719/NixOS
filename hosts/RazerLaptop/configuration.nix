@@ -11,6 +11,36 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  boot.supportedFilesystems = [ "ntfs" ];
+  
+  sops = {
+    defaultSopsFile = ../../secrets/veracrypt.yaml;
+    age.generateKey = true;  # Generates /var/lib/sops-nix/key.txt on first rebuild
+    age.keyFile = "/var/lib/sops-nix/key.txt";  # Persistent host key for decryption
+
+    secrets.veracrypt_pass = {
+      format = "yaml";
+      sopsFile = ../../secrets/veracrypt.yaml;
+      key = "veracrypt_password";
+      mode = "0400";
+    };
+  };
+
+  environment.etc = {
+    crypttab = {
+      enable = true;
+      text = ''
+        data PARTUUID=146026d0-43cd-4210-b969-9bc44e22467d ${config.sops.secrets.veracrypt_pass.path} tcrypt-veracrypt,nofail
+      '';
+    };
+  };
+
+  fileSystems."/mnt/data" = { 
+    device = "/dev/mapper/data";
+    fsType = "ntfs-3g";
+    options = [ "rw" "uid=1000" "gid=100" "umask=0022" "nofail" ];
+  };
   
   networking = {
     networkmanager.enable = true;
@@ -75,7 +105,8 @@
       zsh
     ];
     systemPackages = with pkgs; [
-      sbctl
+      ntfs3g
+      veracrypt
       bolt
     ];
   };
