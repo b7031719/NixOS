@@ -19,7 +19,7 @@
     enableCompletion = true;
     loginExtra = ''
       if uwsm check may-start; then
-        exec uwsm start default > /dev/null 2>&1
+        exec uwsm start hyprland-uwsm.desktop > /dev/null 2>&1
       fi
     '';
   };
