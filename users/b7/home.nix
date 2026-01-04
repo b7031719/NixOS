@@ -17,14 +17,13 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     enableCompletion = true;
+    loginExtra = ''
+      if uwsm check may-start; then
+        exec uwsm start default > /dev/null 2>&1
+      fi
+    '';
   };
 
-  home.file.".zprofile".text = ''
-    if [[ -z $DISPLAY ]] && [[ $(tty) == /dev/tty1 ]]; then
-      uwsm start default
-    fi
-  '';
-  
   programs.kitty = {
     enable = true;
     settings = {
