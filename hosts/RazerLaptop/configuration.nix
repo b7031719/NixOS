@@ -27,12 +27,15 @@
     };
   };
 
-  environment.etc = {
-    crypttab = {
-      enable = true;
-      text = ''
-        data PARTUUID=146026d0-43cd-4210-b969-9bc44e22467d ${config.sops.secrets.veracrypt_pass.path} tcrypt-veracrypt,nofail
-      '';
+  systemd.services.unlock-veracrypt-data = {
+    description = "Unlock VeraCrypt data volume after graphical login";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "graphical-session.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.systemd}/lib/systemd/systemd-cryptsetup attach data /dev/nvme0n1p8 ${config.sops.secrets.veracrypt_pass.path} tcrypt-veracrypt";
+      ExecStop = "${pkgs.systemd}/lib/systemd/systemd-cryptsetup detach data";
     };
   };
 
