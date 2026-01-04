@@ -8,6 +8,7 @@ in
     package = null;    # Use the package provided in environment packages
     portalPackage = null;
     xwayland.enable = true;   # Enables backwards compatibility with X11 based apps
+    systemd.enable = false;
     settings = {
       
       # Define some application variables
