@@ -29,8 +29,8 @@
 
   systemd.services.unlock-veracrypt-data = {
     description = "Unlock VeraCrypt data volume after graphical login";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "graphical-session.target" ];
+    wantedBy = [ "graphical.target" ];
+    after = [ "graphical.target" ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
