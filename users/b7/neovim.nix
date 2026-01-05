@@ -1,7 +1,7 @@
 { config, lib, pkgs, ...}:
 let
   nvimConfigPath = "${config.home.homeDirectory}/dotfiles/Neovim";
-  repoUrl = "git@github.com:b7031719/Neovim.git";
+  repoUrl = "https://github.com/b7031719/Neovim.git";
 in
 {
   programs.neovim = {
