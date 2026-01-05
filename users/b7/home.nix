@@ -65,12 +65,23 @@
     package = pkgs.kodi-wayland;
   };
 
+  programs.ssh = {
+    enable = true;
+    enableDefaultConfig = false;
+    matchBlocks."*" = {
+      addKeysToAgent = "yes";
+      identitiesOnly = true;
+      identityFile = "~/.ssh/id_ed25519";
+    };
+  };
+
   services.dunst = {   # Notification daemon
     enable = true;
   };
 
   services.ssh-agent = {
     enable = true;
+    enableZshIntegration = true;
   };
 
   home.packages = with pkgs; [
