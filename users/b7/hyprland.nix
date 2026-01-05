@@ -10,6 +10,7 @@ in
     xwayland.enable = true;   # Enables backwards compatibility with X11 based apps
     systemd.enable = false;
     settings = {
+      misc.disable_watchdog_warning = true;
       
       # Define some application variables
       "$terminal" = "kitty";
