@@ -77,6 +77,19 @@
   };
 
   services = {
+    #logind configuration
+    logind = {
+      settings.Login = {
+        IdleAction = "lock";
+        IdleActionSec = 300;
+        SleepOperation = [ "suspend" "suspend-then-hibernate" "hibernate" ];
+        HandlePowerKey = "suspend";
+        HandlePowerKeyLongPress = "poweroff";
+        HandleLidSwitch = "suspend";
+        HandleLidSwitchExternalPower = "ignore";
+        HandleLidSwitchDocked = "ignore";
+      };
+    };
     # Sound configuration
     pipewire = {
       enable = true;
