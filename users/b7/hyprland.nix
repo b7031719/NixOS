@@ -3,6 +3,25 @@ let
   hypr = hyprland.packages;
 in
 {
+  # Add a lid toggle switch to configure external displays from the lid switch event
+  home.file.".config/hypr/lid-toggle.sh" = {
+    text = ''
+      #!/usr/bin/env bash
+
+      if [ "$1" = "open" ]; then
+        # Lid open: Enable built-in monitor and extend desktop
+        hyprctl keyword monitor "eDP-1, preferred, auto-down, 1" 2>/dev/null || true
+      else
+        # Check if any external monitor (DP- or HDMI-) is connected
+        if hyprctl monitors | grep -Eq 'DP-[0-9]+|HDMI-A-[0-9]+'; then
+          # Lid closed: Disable built-in monitor, leaving only external active
+          hyprctl keyword monitor "eDP-1, disable" 2>/dev/null || true
+        fi
+      fi
+    '';
+    executable = true;
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
     package = null;    # Use the package provided in environment packages
@@ -39,19 +58,19 @@ in
         "$mainMod, M, exit,"
         "$mainMod, R, exec, uwsm app -- $menu"
         "$mainMod, C, killactive,"
-	"$mainMod, B, exec, uwsm app -- brave"
-	"$mainMod, T, togglefloating,"
-	"$mainMod, E, exec, uwsm app -- $fileManager"
-	"$mainMod, F, fullscreen, 1"
-	"$mainMod, N, exec, uwsm app -- $editor"
-	"$mainMod, L, exec, hyprlock"
-	"$mainMod SHIFT, F, fullscreen, 0"
+        "$mainMod, B, exec, uwsm app -- brave"
+        "$mainMod, T, togglefloating,"
+        "$mainMod, E, exec, uwsm app -- $fileManager"
+        "$mainMod, F, fullscreen, 1"
+        "$mainMod, N, exec, uwsm app -- $editor"
+        "$mainMod, L, exec, hyprlock"
+        "$mainMod SHIFT, F, fullscreen, 0"
         "$mainMod, left, movefocus, l"
         "$mainMod, right, movefocus, r"
         "$mainMod, up, movefocus, u"
         "$mainMod, down, movefocus, d"
-	"$mainMod, 1, workspace, 1"
-	"$mainMod, 2, workspace, 2"
+        "$mainMod, 1, workspace, 1"
+        "$mainMod, 2, workspace, 2"
         "$mainMod, 3, workspace, 3"
         "$mainMod, 4, workspace, 4"
         "$mainMod, 5, workspace, 5"
@@ -60,8 +79,8 @@ in
         "$mainMod, 8, workspace, 8"
         "$mainMod, 9, workspace, 9"
         "$mainMod, 0, workspace, 10"
-	"$mainMod SHIFT, 1, workspace, 1"
-	"$mainMod SHIFT, 2, workspace, 2"
+	      "$mainMod SHIFT, 1, workspace, 1"
+	      "$mainMod SHIFT, 2, workspace, 2"
         "$mainMod SHIFT, 3, workspace, 3"
         "$mainMod SHIFT, 4, workspace, 4"
         "$mainMod SHIFT, 5, workspace, 5"
@@ -74,14 +93,18 @@ in
       
       bindm = [
         "$mainMod, mouse:272, movewindow"
-	"$mainMod, mouse:273, resizewindow"
+	      "$mainMod, mouse:273, resizewindow"
       ];
 
       # Monitor settings
       monitor = [ ",preferred,auto,1" ];
+      bindl = [
+        ",switch:on:Lid Switch,exec,~/.config/hypr/lid-toggle.sh close"  # Lid closed (switch on)
+        ",switch:off:Lid Switch,exec,~/.config/hypr/lid-toggle.sh open"  # Lid open (switch off)
+      ];
 
       exec-once = [
-	"hyprlock --immediate"   # Lock screen immediately on startup (getty autologin enabled)
+	      "hyprlock --immediate"   # Lock screen immediately on startup (getty autologin enabled)
         "uwsm app -- waybar"
       ];
 
