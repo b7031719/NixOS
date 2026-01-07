@@ -65,6 +65,9 @@
     enable32Bit = true;
   };
 
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
   # Locale settings
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
