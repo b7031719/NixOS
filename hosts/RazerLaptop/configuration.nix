@@ -103,6 +103,9 @@
       autologinUser = "b7";
       autologinOnce = true;
     };
+    # Service for periodic trim of mounted partitions
+    fstrim.enable = true;
+
   };
 
   programs = {
