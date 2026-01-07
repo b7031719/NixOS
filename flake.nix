@@ -53,6 +53,7 @@
           modules = [
             ./hosts/RazerLaptop/configuration.nix
             ./hosts/RazerLaptop/hardware-configuration.nix
+            ./hosts/RazerLaptop/gpu.nix
             inputs.sops-nix.nixosModules.sops
           ];
         };
