@@ -60,11 +60,6 @@
 
   users.users.root.initialPassword = "nix1";
 
-  hardware.graphics = {   # Enable hardware graphics acceleration
-    enable = true;
-    enable32Bit = true;
-  };
-
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 

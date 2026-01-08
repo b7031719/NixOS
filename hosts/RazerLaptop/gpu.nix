@@ -13,6 +13,7 @@
 
   hardware.graphics = {
     enable = true;
+    enable32Bit = true;
     # Add various packages for vaapi media support etc.
     extraPackages = with pkgs; [
       intel-media-driver
