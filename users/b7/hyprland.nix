@@ -3,7 +3,7 @@ let
   hypr = hyprland.packages;
 in
 {
-  # Add a lid toggle switch to configure external displays from the lid switch event
+  # Script to enable/disable internal monitor eDP-1 based on lid switch
   home.file.".config/hypr/lid-toggle.sh" = {
     text = ''
       #!/usr/bin/env bash
@@ -17,6 +17,58 @@ in
           # Lid closed: Disable built-in monitor, leaving only external active
           hyprctl keyword monitor "eDP-1, disable" 2>/dev/null || true
         fi
+      fi
+    '';
+    executable = true;
+  };
+
+  # Script to toggle mirroring of internal monitor eDP-1 if active and external monitors are connected
+  home.file.".config/hypr/mirror-toggle.sh" = {
+    text = ''
+      #!/usr/bin/env bash
+
+      # All monitors including hidden/mirrored
+      ALL_MONITORS=$(hyprctl monitors all | grep '^Monitor' | awk '{print $2}')
+
+      # Active/visible monitors (excludes purely mirrored ones)
+      ACTIVE_MONITORS=$(hyprctl monitors | grep '^Monitor' | awk '{print $2}')
+
+      # Check if eDP-1 is active
+      if ! echo "$ACTIVE_MONITORS" | grep -q '^eDP-1$'; then
+          exit 0
+      fi
+
+      hyprctl notify 1 1000 "rgb(00ff00)" "Toggling mirror mode"
+
+      # Potential externals
+      POTENTIAL_EXTERNALS=$(echo "$ALL_MONITORS" | grep -E '^(DP-|HDMI-)')
+
+      if [ -z "$POTENTIAL_EXTERNALS" ]; then
+          exit 0
+      fi
+
+      # Check if any potential external is missing from active → mirrored mode
+      IS_MIRRORED=true
+      for mon in $POTENTIAL_EXTERNALS; do
+          if echo "$ACTIVE_MONITORS" | grep -q "^$mon$"; then
+              IS_MIRRORED=false
+              break  # At least one external is visible → extended
+          fi
+      done
+
+      # Always set eDP-1 for consistency
+      hyprctl keyword monitor "eDP-1,preferred,auto,1"
+
+      if $IS_MIRRORED; then
+          # Switch to extended: re-enable each external with position
+          for mon in $POTENTIAL_EXTERNALS; do
+              hyprctl keyword monitor "$mon,preferred,auto,1"
+          done
+      else
+          # Switch to mirrored
+          for mon in $POTENTIAL_EXTERNALS; do
+              hyprctl keyword monitor "$mon,preferred,auto,1,mirror,eDP-1"
+          done
       fi
     '';
     executable = true;
@@ -64,6 +116,7 @@ in
         "$mainMod, F, fullscreen, 1"
         "$mainMod, N, exec, uwsm app -- $editor"
         "$mainMod, L, exec, hyprlock"
+        "$mainMod, P, exec, ${config.xdg.configHome}/hypr/mirror-toggle.sh"
         "$mainMod SHIFT, F, fullscreen, 0"
         "$mainMod, left, movefocus, l"
         "$mainMod, right, movefocus, r"
