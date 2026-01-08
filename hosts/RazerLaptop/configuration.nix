@@ -61,7 +61,12 @@
   users.users.root.initialPassword = "nix1";
 
   hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
+  services = {
+    blueman.enable = true;
+    hardware = {
+      bolt.enable = true;
+    };
+  };
 
   # Locale settings
   time.timeZone = "Europe/London";
@@ -124,7 +129,6 @@
     systemPackages = with pkgs; [
       ntfs3g
       veracrypt
-      bolt
     ];
   };
 
