@@ -53,7 +53,7 @@
     users.b7 = {
       isNormalUser = true;
       initialPassword = "nix1";
-      extraGroups = [ "wheel" "networkmanager" ];
+      extraGroups = [ "wheel" "networkmanager" "video" ];
     };
     defaultUserShell = pkgs.zsh;
   };
@@ -129,6 +129,8 @@
     systemPackages = with pkgs; [
       ntfs3g
       veracrypt
+      brightnessctl
+      playerctl
     ];
   };
 
