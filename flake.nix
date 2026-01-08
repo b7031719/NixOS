@@ -23,6 +23,15 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, hyprland, hyprlock, ...}@inputs: 
@@ -64,9 +73,12 @@
       homeConfigurations = { 
         b7 = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [ ./users/b7/home.nix ];
+          modules = [
+            inputs.zen-browser.homeModules.default
+            ./users/b7/home.nix
+          ];
           extraSpecialArgs = {
-            inherit hyprland hyprlock;
+            inherit hyprland hyprlock inputs;
   	      };
 	      };
       };

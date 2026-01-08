@@ -5,6 +5,7 @@
     ./hyprland.nix
     ./hyprlock.nix
     ./neovim.nix
+    ./zen-browser.nix
   ];
   
   home.username = "b7";
