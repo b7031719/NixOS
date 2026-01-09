@@ -104,7 +104,7 @@ in
       dwindle = {
         preserve_split      = true;
         force_split         = 0;          # 0 = smart based on mouse pos
-        default_split_ratio = 1.3;        # >1 favors new window (good for ultrawide)
+        default_split_ratio = 1;
         smart_split         = true;
         smart_resizing      = true;
       };
@@ -142,16 +142,16 @@ in
         "$mainMod, 8, workspace, 8"
         "$mainMod, 9, workspace, 9"
         "$mainMod, 0, workspace, 10"
-	      "$mainMod SHIFT, 1, workspace, 1"
-	      "$mainMod SHIFT, 2, workspace, 2"
-        "$mainMod SHIFT, 3, workspace, 3"
-        "$mainMod SHIFT, 4, workspace, 4"
-        "$mainMod SHIFT, 5, workspace, 5"
-        "$mainMod SHIFT, 6, workspace, 6"
-        "$mainMod SHIFT, 7, workspace, 7"
-        "$mainMod SHIFT, 8, workspace, 8"
-        "$mainMod SHIFT, 9, workspace, 9"
-        "$mainMod SHIFT, 0, workspace, 10"
+	      "$mainMod SHIFT, 1, movetoworkspace, 1"
+	      "$mainMod SHIFT, 2, movetoworkspace, 2"
+        "$mainMod SHIFT, 3, movetoworkspace, 3"
+        "$mainMod SHIFT, 4, movetoworkspace, 4"
+        "$mainMod SHIFT, 5, movetoworkspace, 5"
+        "$mainMod SHIFT, 6, movetoworkspace, 6"
+        "$mainMod SHIFT, 7, movetoworkspace, 7"
+        "$mainMod SHIFT, 8, movetoworkspace, 8"
+        "$mainMod SHIFT, 9, movetoworkspace, 9"
+        "$mainMod SHIFT, 0, movetoworkspace, 10"
 
         # Brightness controls
         ", XF86MonBrightnessUp, exec, brightnessctl set +5%"
