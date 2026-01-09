@@ -1,7 +1,7 @@
 { config, lib, pkgs, ...}:
 let
-  nvimConfigPath = "${config.home.homeDirectory}/dotfiles/Neovim";
-  repoUrl = "https://github.com/b7031719/Neovim.git";
+  nvimConfigPath = "${config.home.homeDirectory}/dotfiles";
+  repoUrl = "https://github.com/b7031719/dotfiles.git";
 in
 {
   programs.neovim = {
@@ -33,7 +33,7 @@ in
   };
 
   # Creates a symlink in the nix store to the Neovim configuration directory from the dotfiles directory
-  xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink nvimConfigPath;
+  xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink "${nvimConfigPath}/Neovim";
   xdg.configFile."nvim".recursive = true;
 
   # Activation script: Clone the repo if the directory doesn't exist
@@ -41,7 +41,6 @@ in
     lib.hm.dag.entryAfter ["linkGeneration"] ''
       if [ ! -d "${nvimConfigPath}/.git" ]; then
         $DRY_RUN_CMD ${pkgs.git}/bin/git \
-	-c core.sshCommand="${pkgs.openssh}/bin/ssh" \
 	clone ${repoUrl} "${nvimConfigPath}"
       fi
     '';
