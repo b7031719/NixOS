@@ -101,6 +101,14 @@ in
         rounding = 10;
       };
 
+      dwindle = {
+        preserve_split      = true;
+        force_split         = 0;          # 0 = smart based on mouse pos
+        default_split_ratio = 1.3;        # >1 favors new window (good for ultrawide)
+        smart_split         = true;
+        smart_resizing      = true;
+      };
+
       misc = {
         disable_splash_rendering = true;
       };
