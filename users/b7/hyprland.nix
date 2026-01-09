@@ -118,6 +118,7 @@ in
         "$mainMod, N, exec, uwsm app -- $editor"
         "$mainMod, L, exec, hyprlock"
         "$mainMod, P, exec, ${config.xdg.configHome}/hypr/mirror-toggle.sh"
+        "$mainMod, S, togglesplit,"
         "$mainMod SHIFT, F, fullscreen, 0"
         "$mainMod, left, movefocus, l"
         "$mainMod, right, movefocus, r"
