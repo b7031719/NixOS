@@ -1,4 +1,8 @@
-{ pkgs, ...}:
+{ config, lib, pkgs, ...}:
+let
+  dotfilesPath = "${config.home.homeDirectory}/dotfiles";
+  repoUrl = "https://github.com/b7031719/dotfiles.git";
+in
 {
   
   imports = [
@@ -12,6 +16,15 @@
   home.homeDirectory = "/home/b7";
 
   programs.home-manager.enable = true;
+
+  # Activation script to clone the dotfiles repo
+  home.activation.cloneNvimConfig =
+    lib.hm.dag.entryAfter ["linkGeneration"] ''
+      if [ ! -d "${dotfilesPath}/.git" ]; then
+        $DRY_RUN_CMD ${pkgs.git}/bin/git \
+        clone ${repoUrl} "${dotfilesPath}"
+      fi
+    '';
 
   programs.zsh = {
     enable = true;
