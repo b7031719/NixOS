@@ -152,6 +152,14 @@ in
         "$mainMod SHIFT, 8, movetoworkspace, 8"
         "$mainMod SHIFT, 9, movetoworkspace, 9"
         "$mainMod SHIFT, 0, movetoworkspace, 10"
+        "$mainMod SHIFT, left, swapwindow, l"
+        "$mainMod SHIFT, right, swapwindow, r"
+        "$mainMod SHIFT, up, swapwindow, u"
+        "$mainMod SHIFT, down, swapwindow, d"
+        "$mainMod CTRL, left,  movewindow, l"
+        "$mainMod CTRL, right, movewindow, r"
+        "$mainMod CTRL, up,    movewindow, u"
+        "$mainMod CTRL, down,  movewindow, d"
 
         # Brightness controls
         ", XF86MonBrightnessUp, exec, brightnessctl set +5%"
