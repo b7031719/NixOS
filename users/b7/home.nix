@@ -93,6 +93,13 @@ in
     enable = true;
   };
 
+  services.udiskie = {
+    enable = true;
+    automount = true;
+    notify = true;
+    tray = "auto";
+  };
+
   services.ssh-agent = {
     enable = true;
     enableZshIntegration = true;
@@ -107,12 +114,13 @@ in
     conda
     xdg-utils
     nerd-fonts.caskaydia-cove
-    vlc
     libreoffice
     librecad
     qelectrotech
     discord
-    gcc
+    usbutils
+    udisks2
+    udiskie
   ];
   
   home.sessionVariables = {
