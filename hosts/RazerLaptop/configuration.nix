@@ -106,9 +106,14 @@
       autologinUser = "b7";
       autologinOnce = true;
     };
+    # A daemon for providing a dbus interface for storage devices including usb flash drives
+    udisks2 = {
+      enable = true;
+      settings = {
+      };
+    };
     # Service for periodic trim of mounted partitions
     fstrim.enable = true;
-
   };
 
   programs = {
