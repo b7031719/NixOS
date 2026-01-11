@@ -38,6 +38,15 @@ in
     '';
   };
 
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  xdg.configFile."starship.toml" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/starship/starship.toml";
+  };
+
   programs.kitty = {
     enable = true;
     settings = {
