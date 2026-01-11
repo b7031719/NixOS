@@ -43,16 +43,15 @@ in
     enableZshIntegration = true;
   };
 
+  # Add starship dotfile to .config
   xdg.configFile."starship.toml" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/starship/starship.toml";
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/starship/starship.toml";
   };
 
-  programs.kitty = {
-    enable = true;
-    settings = {
-      font_family = "Caskaydia Cove Nerd Font";
-      font_size = 12;
-    };
+  # Add kitty dotfiles to .config
+  xdg.configFile."kitty" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/kitty";
+    recursive = true;
   };
 
   programs.yazi = {    # Terminal based file manager
@@ -115,6 +114,7 @@ in
   };
 
   home.packages = with pkgs; [
+    kitty
     polkit
     brave
     proton-pass
