@@ -19,6 +19,10 @@
       url = "github:hyprwm/hyprlock";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprpaper = {
+      url = "github:hyprwm/hyprpaper";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -78,7 +82,7 @@
             ./users/b7/home.nix
           ];
           extraSpecialArgs = {
-            inherit hyprland hyprlock inputs;
+            inherit inputs;
   	      };
 	      };
       };

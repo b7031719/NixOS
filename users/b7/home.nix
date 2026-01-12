@@ -8,6 +8,7 @@ in
   imports = [
     ./hyprland.nix
     ./hyprlock.nix
+    ./hyprpaper.nix
     ./neovim.nix
     ./zen-browser.nix
   ];
