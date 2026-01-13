@@ -1,7 +1,4 @@
-{ config, pkgs, ...}:
-let
-  dotfilesPath = "${config.home.homeDirectory}/dotfiles";
-in
+{ config, lib, pkgs, dotfilesPath, ... }: 
 {
   home.packages = [
     # Script to enable/disable internal monitor eDP-1 based on lid switch

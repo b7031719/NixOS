@@ -1,11 +1,7 @@
-{ config, lib, pkgs, inputs, ... }:
-let
-  dotfilesPath = "${config.home.homeDirectory}/dotfiles";
-in 
+{ config, lib, pkgs, dotfilesPath, ... }:
 {
   services.hyprpaper = {
     enable = true;
-    package = inputs.hyprpaper.packages.${pkgs.stdenv.hostPlatform.system}.hyprpaper;
   };
 
   xdg.configFile."hypr/hyprpaper.conf" = {

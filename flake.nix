@@ -1,5 +1,5 @@
 {
-  description = "NixOS system flake";
+  description = "NixOS and home-manager flake";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -9,18 +9,6 @@
     };
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    hyprlock = {
-      url = "github:hyprwm/hyprlock";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    hyprpaper = {
-      url = "github:hyprwm/hyprpaper";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {
@@ -38,7 +26,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, hyprlock, ...}@inputs: 
+  outputs = { self, nixpkgs, ...}@inputs: 
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {        # pkgs created to set the allowUnfree config parameter
@@ -47,7 +35,7 @@
       };
     in {
 
-      # NIXOS SYSTEM CONFIGURATION
+      # NIXOS SYSTEM CONFIGURATIONS
       nixosConfigurations = {
         RazerLaptopVM = nixpkgs.lib.nixosSystem {
           inherit system pkgs;
@@ -73,18 +61,19 @@
       };
       
 
-      # HOME-MANAGER CONFIGURATION (STANDALONE)
+      # HOME-MANAGER CONFIGURATIONS (STANDALONE)
       homeConfigurations = { 
-        b7 = home-manager.lib.homeManagerConfiguration {
+        b7 = inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [
-            inputs.zen-browser.homeModules.default
-            ./users/b7/home.nix
-          ];
+          modules = [ ./users/b7/home.nix ];
           extraSpecialArgs = {
             inherit inputs;
-  	      };
-	      };
+            username = "b7";
+            homeDirectory = "/home/b7";
+            dotfilesPath = "/home/b7/dotfiles";
+            repoUrl = "https://github.com/b7031719/dotfiles.git";
+          };
+        };
       };
 
     };

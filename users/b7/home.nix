@@ -1,8 +1,4 @@
-{ config, lib, pkgs, ...}:
-let
-  dotfilesPath = "${config.home.homeDirectory}/dotfiles";
-  repoUrl = "https://github.com/b7031719/dotfiles.git";
-in
+{ config, lib, pkgs, username, homeDirectory, dotfilesPath, repoUrl, ... }:
 {
   
   imports = [
@@ -13,8 +9,8 @@ in
     ./zen-browser.nix
   ];
   
-  home.username = "b7";
-  home.homeDirectory = "/home/b7";
+  home.username = "${username}";
+  home.homeDirectory = "${homeDirectory}";
 
   programs.home-manager.enable = true;
 
@@ -65,7 +61,7 @@ in
     enable = true;
     settings = {
       user = {
-        name = "b7";
+        name = "${username}";
         email = "danfenton@pm.me";
       };
     };

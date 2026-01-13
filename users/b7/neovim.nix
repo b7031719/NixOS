@@ -1,7 +1,4 @@
-{ config, pkgs, ...}:
-let
-  dotfilesPath = "${config.home.homeDirectory}/dotfiles";
-in
+{ config, lib, pkgs, dotfilesPath, ... }:
 {
   programs.neovim = {
     enable = true;

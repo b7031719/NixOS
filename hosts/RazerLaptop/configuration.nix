@@ -119,9 +119,8 @@
   programs = {
     hyprland = {
       enable = true;
-      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;      # Use package provided by flake
-      portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
       withUWSM = true;   # For Wayland session management and prevent apps from running as child processes to hyprland
+      xwayland.enable = true;
     };
     zsh.enable = true;
   };
