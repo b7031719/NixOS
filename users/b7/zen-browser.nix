@@ -66,6 +66,7 @@
         Locked = true;
         Cryptomining = true;
         Fingerprinting = true;
+      };
     };
   };
 
@@ -87,4 +88,5 @@
       };
     };
   };
+
 }
