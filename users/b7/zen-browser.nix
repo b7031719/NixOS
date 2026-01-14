@@ -26,26 +26,26 @@
           darkreader
           proton-pass
         ];
-      };
-    };
 
-    spaces = {
-      Default = {
-        id = "3408cb95-08f7-4808-b2ca-83361670c239";
-        position = 1000;
-        theme = {
-          type = "gradient";
-          colors = [
-            {
-              red = 248;
-              green = 248;
-              blue = 242;
-              algorithm = "complementary";
-              type = "explicit-lightness";
-            }
-          ];
-          opacity = 0.85;
-          texture = 0.5;
+        spaces = {
+          Default = {
+            id = "3408cb95-08f7-4808-b2ca-83361670c239";
+            position = 1000;
+            theme = {
+              type = "gradient";
+              colors = [
+                {
+                  red = 248;
+                  green = 248;
+                  blue = 242;
+                  algorithm = "complementary";
+                  type = "explicit-lightness";
+                }
+              ];
+              opacity = 0.85;
+              texture = 0.5;
+            };
+          };
         };
       };
     };
