@@ -15,13 +15,32 @@
   programs.home-manager.enable = true;
 
   # Activation script to clone the dotfiles repo
-  home.activation.cloneNvimConfig =
-    lib.hm.dag.entryAfter ["linkGeneration"] ''
+  home.activation.cloneDofiles =
+    lib.hm.dag.entryAfter ["writeBoundary"] ''
       if [ ! -d "${dotfilesPath}/.git" ]; then
         $DRY_RUN_CMD ${pkgs.git}/bin/git \
         clone ${repoUrl} "${dotfilesPath}"
       fi
     '';
+
+  # Create a symlink from the dotfiles repo .config folder to the user .config folder
+  xdg.configFile = {
+    "nvim" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/.config/nvim";
+      recursive = true;
+    };
+    "hypr" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/.config/hypr";
+      recursive = true;
+    };
+    "kitty" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/.config/kitty";
+      recursive = true;
+    };
+    "starship.toml" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/.config/starship.toml";
+    };
+  };
 
   programs.zsh = {
     enable = true;
@@ -38,17 +57,6 @@
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
-  };
-
-  # Add starship dotfile to .config
-  xdg.configFile."starship.toml" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/starship/starship.toml";
-  };
-
-  # Add kitty dotfiles to .config
-  xdg.configFile."kitty" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/kitty";
-    recursive = true;
   };
 
   programs.yazi = {    # Terminal based file manager

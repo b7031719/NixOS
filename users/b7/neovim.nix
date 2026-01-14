@@ -1,4 +1,4 @@
-{ config, lib, pkgs, dotfilesPath, ... }:
+{ config, lib, pkgs, ... }:
 {
   programs.neovim = {
     enable = true;
@@ -26,11 +26,5 @@
       python313Packages.flake8         # Python
       statix         # Nix static analysis
     ];
-  };
-
-  # Creates a symlink in the nix store to the Neovim configuration directory from the dotfiles directory
-  xdg.configFile."nvim" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/Neovim";
-    recursive = true;
   };
 }

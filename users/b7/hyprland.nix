@@ -1,4 +1,4 @@
-{ config, lib, pkgs, dotfilesPath, ... }: 
+{ config, lib, pkgs, ... }: 
 {
   home.packages = [
     # Script to enable/disable internal monitor eDP-1 based on lid switch
@@ -73,8 +73,4 @@
     systemd.enable = false;
   };
 
-  # Creates a symlink in the nix store to the hyprland config file from the dotfiles directory
-  xdg.configFile."hypr/hyprland.conf" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/Hyprland/hyprland.conf";
-  };
 }
