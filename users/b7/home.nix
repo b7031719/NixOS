@@ -23,22 +23,22 @@
       fi
     '';
 
-  # Create a symlink from the dotfiles repo .config folder to the user .config folder
+  # Create a symlink from the dotfiles repo folder to the user .config folder
   xdg.configFile = {
     "nvim" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/.config/nvim";
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/nvim";
       recursive = true;
     };
     "hypr" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/.config/hypr";
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/hypr";
       recursive = true;
     };
     "kitty" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/.config/kitty";
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/kitty";
       recursive = true;
     };
     "starship.toml" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/.config/starship.toml";
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/starship.toml";
     };
   };
 
