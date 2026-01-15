@@ -118,6 +118,9 @@
     enableZshIntegration = true;
   };
 
+  # Start a polkit agent for password prompted privilege escalation
+  services.hyprpolkitagent.enable = true;
+
   home.packages = with pkgs; [
     kitty
     polkit
