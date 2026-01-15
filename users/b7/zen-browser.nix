@@ -11,15 +11,14 @@
       default = {
         id = 0;
         isDefault = true;
-        spacesForce = true;
         settings = {
           "browser.startup.page" = 3;
           "privacy.resistFingerprinting" = true;
           "signon.management.page.override" = true;
-          "layout.css.prefers-color-scheme.content-override" = 0;
+          "layout.css.prefers-color-scheme.content-override" = 3;
           "browser.theme.content-theme" = 0;
           "browser.theme.toolbar-theme" = 0;
-          "ui.systemUsesDarkTheme" = true;
+          "ui.systemUsesDarkTheme" = 1;
         };
         extensions.packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
           ublock-origin
