@@ -18,7 +18,7 @@
       prettier       # JS/TS/HTML/CSS
       stylua         # Lua
       shfmt          # Bash/shell
-      alejandra      # Nix
+      nixfmt         # Nix
 
       # Linters/diagnostics
       shellcheck     # Bash
