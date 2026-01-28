@@ -40,6 +40,10 @@
     "starship.toml" = {
       source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/starship.toml";
     };
+    "waybar" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/waybar";
+      recursive = true;
+    };
   };
 
   programs.zsh = {
