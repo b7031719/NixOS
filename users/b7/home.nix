@@ -128,11 +128,9 @@
   home.packages = with pkgs; [
     kitty
     polkit
-    brave
     proton-pass
     protonvpn-gui
     protonmail-desktop
-    conda
     xdg-utils
     nerd-fonts.caskaydia-cove
     libreoffice
