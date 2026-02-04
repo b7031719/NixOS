@@ -1,6 +1,15 @@
-{ config, lib, pkgs, username, homeDirectory, dotfilesPath, repoUrl, ... }:
 {
-  
+  config,
+  lib,
+  pkgs,
+  username,
+  homeDirectory,
+  dotfilesPath,
+  repoUrl,
+  ...
+}:
+{
+
   imports = [
     ./hyprland.nix
     ./hyprlock.nix
@@ -8,20 +17,19 @@
     ./neovim.nix
     ./zen-browser.nix
   ];
-  
+
   home.username = "${username}";
   home.homeDirectory = "${homeDirectory}";
 
   programs.home-manager.enable = true;
 
   # Activation script to clone the dotfiles repo
-  home.activation.cloneDofiles =
-    lib.hm.dag.entryAfter ["writeBoundary"] ''
-      if [ ! -d "${dotfilesPath}/.git" ]; then
-        $DRY_RUN_CMD ${pkgs.git}/bin/git \
-        clone ${repoUrl} "${dotfilesPath}"
-      fi
-    '';
+  home.activation.cloneDofiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if [ ! -d "${dotfilesPath}/.git" ]; then
+      $DRY_RUN_CMD ${pkgs.git}/bin/git \
+      clone ${repoUrl} "${dotfilesPath}"
+    fi
+  '';
 
   # Create a symlink from the dotfiles repo folder to the user .config folder
   xdg.configFile = {
@@ -63,12 +71,13 @@
     enableZshIntegration = true;
   };
 
-  programs.yazi = {    # Terminal based file manager
+  programs.yazi = {
+    # Terminal based file manager
     enable = true;
   };
 
-  fonts.fontconfig.enable = true;   # Allows kitty etc. to configure fonts.
-  
+  fonts.fontconfig.enable = true; # Allows kitty etc. to configure fonts.
+
   programs.git = {
     enable = true;
     settings = {
@@ -83,7 +92,8 @@
     enable = true;
   };
 
-  programs.wofi = {   # Application launcher
+  programs.wofi = {
+    # Application launcher
     enable = true;
   };
 
@@ -96,6 +106,31 @@
     package = pkgs.kodi-wayland;
   };
 
+  programs.zapzap = {
+    enable = true;
+    settings = {
+      notification = {
+        donation_message = true;
+      };
+      system = {
+        scale = 150;
+        theme = "dark";
+        wayland = true;
+      };
+      website = {
+        open_page = false;
+      };
+    };
+  };
+
+  programs.zathura = {
+    enable = true;
+    options = {
+      default-bg = "#272822";
+      default-fg = "#A89984";
+    };
+  };
+
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
@@ -106,7 +141,8 @@
     };
   };
 
-  services.dunst = {   # Notification daemon
+  services.dunst = {
+    # Notification daemon
     enable = true;
   };
 
@@ -141,12 +177,12 @@
     udisks2
     udiskie
   ];
-  
+
   home.sessionVariables = {
-    NIXOS_OZONE_WL = "1";   # Try to force electron apps to use Wayland
+    NIXOS_OZONE_WL = "1"; # Try to force electron apps to use Wayland
     EDITOR = "kitty -e nvim";
   };
 
-  home.stateVersion = "24.11";   # Do not change. Required for defining the original home-manager install version
+  home.stateVersion = "24.11"; # Do not change. Required for defining the original home-manager install version
 
 }
