@@ -176,6 +176,7 @@
     usbutils
     udisks2
     udiskie
+    nfs-utils
   ];
 
   home.sessionVariables = {
