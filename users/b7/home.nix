@@ -161,6 +161,25 @@
   # Start a polkit agent for password prompted privilege escalation
   services.hyprpolkitagent.enable = true;
 
+  # Syncthing service for file sync
+  services.syncthing = {
+    enable = true;
+    settings = {
+      devices = {
+        TRINITY = {
+          addresses = [
+            "dynamic"
+          ];
+          name = "TRINITY";
+          id = "ITLDUYV-AFOTT7M-KRZ3FJ7-PAQN6BD-PRDBBZT-FSE4XU7-AYWPSUK-IQDUKAI";
+        };
+      };
+    };
+    tray = {
+      enable = true;
+    };
+  };
+
   home.packages = with pkgs; [
     kitty
     polkit
