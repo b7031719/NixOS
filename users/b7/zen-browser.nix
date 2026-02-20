@@ -6,6 +6,7 @@
   programs.zen-browser = {
     enable = true;
     package = inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.twilight;
+    suppressXdgMigrationWarning = true;
 
     profiles = {
       default = {

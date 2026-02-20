@@ -74,6 +74,7 @@
   programs.yazi = {
     # Terminal based file manager
     enable = true;
+    shellWrapperName = "y";
   };
 
   fonts.fontconfig.enable = true; # Allows kitty etc. to configure fonts.
