@@ -81,6 +81,7 @@
 
   programs.git = {
     enable = true;
+    signing.format = "openpgp";
     settings = {
       user = {
         name = "${username}";
@@ -166,7 +167,7 @@
     kitty
     polkit
     proton-pass
-    protonvpn-gui
+    proton-vpn
     protonmail-desktop
     xdg-utils
     nerd-fonts.caskaydia-cove
