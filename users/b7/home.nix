@@ -179,6 +179,7 @@
     udisks2
     udiskie
     nfs-utils
+    gocryptfs
   ];
 
   home.sessionVariables = {
