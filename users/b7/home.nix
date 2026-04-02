@@ -186,6 +186,7 @@
     udiskie
     nfs-utils
     gocryptfs
+    glib
   ];
 
   home.sessionVariables = {
