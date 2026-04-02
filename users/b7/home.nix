@@ -52,6 +52,9 @@
       source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/waybar";
       recursive = true;
     };
+    "yazi/init.lua".text = ''
+      require("gvfs"):setup({})
+    '';
   };
 
   programs.zsh = {
@@ -75,6 +78,9 @@
     # Terminal based file manager
     enable = true;
     shellWrapperName = "y";
+    plugins = {
+      inherit (pkgs.yaziPlugins) gvfs;
+    };
   };
 
   fonts.fontconfig.enable = true; # Allows kitty etc. to configure fonts.
