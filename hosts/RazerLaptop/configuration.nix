@@ -114,6 +114,8 @@
     };
     # Service for periodic trim of mounted partitions
     fstrim.enable = true;
+    # gvfs for Android MTP support
+    gvfs.enable = true;
   };
 
   programs = {
