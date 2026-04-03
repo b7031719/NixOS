@@ -82,7 +82,7 @@
       inherit (pkgs.yaziPlugins) gvfs;
     };
     keymap = {
-      mgr.keymap = [
+      mgr.prepend_keymap = [
         { on = [ "M" "m" ]; run = "plugin gvfs -- select-then-mount --jump"; desc = "Select device to mount and jump to its mount point"; }
         { on = [ "M" "u" ]; run = "plugin gvfs -- select-then-unmount --eject"; desc = "Select device then eject"; }
         { on = [ "g" "m" ]; run = "plugin gvfs -- jump-to-device"; desc = "Select device then jump to its mount point"; }
@@ -194,6 +194,8 @@
     nfs-utils
     gocryptfs
     glib
+    android-tools
+    better-adb-sync
   ];
 
   home.sessionVariables = {
