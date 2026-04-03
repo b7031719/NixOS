@@ -7,9 +7,9 @@
       # LSPs
       lua-language-server
       pyright
-      nodePackages.typescript-language-server
-      nodePackages.bash-language-server
-      nodePackages.vscode-langservers-extracted
+      typescript-language-server
+      bash-language-server
+      vscode-langservers-extracted
       nixd
 
       # Formatters
