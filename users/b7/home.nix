@@ -200,7 +200,6 @@
 
   services.ssh-agent = {
     enable = true;
-    enableZshIntegration = true;
   };
 
   # Start a polkit agent for password prompted privilege escalation
