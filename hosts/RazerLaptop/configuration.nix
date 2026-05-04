@@ -56,6 +56,9 @@
       extraGroups = [ "wheel" "networkmanager" "video" ];
     };
     defaultUserShell = pkgs.zsh;
+    extraGroups = {
+      vboxusers.members = [ "b7" ];
+    };
   };
 
   users.users.root.initialPassword = "nix1";
@@ -125,6 +128,20 @@
       xwayland.enable = true;
     };
     zsh.enable = true;
+  };
+
+  # Virtualbox
+  virtualisation = {
+    virtualbox = {
+      host = {
+        enable = true;
+        enableExtensionPack = true;
+      };
+      guest = {
+        enable = true;
+        dragAndDrop = true;
+      };
+    };
   };
   
   environment = {
