@@ -31,30 +31,39 @@
     fi
   '';
 
-  # Create a symlink from the dotfiles repo folder to the user .config folder
-  xdg.configFile = {
-    "nvim" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/nvim";
-      recursive = true;
+  xdg = {
+    mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "application/pdf" = [ "org.pwmt.zathura-pdf-mupdf.desktop" ];
+        "application/epub+zip" = [ "org.pwmt.zathura-pdf-mupdf.desktop" ];
+      };
     };
-    "hypr" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/hypr";
-      recursive = true;
+    # Create a symlink from the dotfiles repo folder to the user .config folder
+    configFile = {
+      "nvim" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/nvim";
+        recursive = true;
+      };
+      "hypr" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/hypr";
+        recursive = true;
+      };
+      "kitty" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/kitty";
+        recursive = true;
+      };
+      "starship.toml" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/starship.toml";
+      };
+      "waybar" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/waybar";
+        recursive = true;
+      };
+      "yazi/init.lua".text = ''
+        require("gvfs"):setup({})
+      '';
     };
-    "kitty" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/kitty";
-      recursive = true;
-    };
-    "starship.toml" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/starship.toml";
-    };
-    "waybar" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/waybar";
-      recursive = true;
-    };
-    "yazi/init.lua".text = ''
-      require("gvfs"):setup({})
-    '';
   };
 
   programs.zsh = {
@@ -83,9 +92,30 @@
     };
     keymap = {
       mgr.prepend_keymap = [
-        { on = [ "M" "m" ]; run = "plugin gvfs -- select-then-mount --jump"; desc = "Select device to mount and jump to its mount point"; }
-        { on = [ "M" "u" ]; run = "plugin gvfs -- select-then-unmount --eject"; desc = "Select device then eject"; }
-        { on = [ "g" "m" ]; run = "plugin gvfs -- jump-to-device"; desc = "Select device then jump to its mount point"; }
+        {
+          on = [
+            "M"
+            "m"
+          ];
+          run = "plugin gvfs -- select-then-mount --jump";
+          desc = "Select device to mount and jump to its mount point";
+        }
+        {
+          on = [
+            "M"
+            "u"
+          ];
+          run = "plugin gvfs -- select-then-unmount --eject";
+          desc = "Select device then eject";
+        }
+        {
+          on = [
+            "g"
+            "m"
+          ];
+          run = "plugin gvfs -- jump-to-device";
+          desc = "Select device then jump to its mount point";
+        }
       ];
     };
   };
