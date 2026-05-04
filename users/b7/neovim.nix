@@ -4,6 +4,7 @@
     enable = true;
     withRuby = false;
     withPython3 = false;
+    sideloadInitLua = true;
 
     extraPackages = with pkgs; [
       # LSPs
