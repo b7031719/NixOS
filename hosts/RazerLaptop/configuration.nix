@@ -53,12 +53,9 @@
     users.b7 = {
       isNormalUser = true;
       initialPassword = "nix1";
-      extraGroups = [ "wheel" "networkmanager" "video" ];
+      extraGroups = [ "wheel" "networkmanager" "video" "vboxusers" ];
     };
     defaultUserShell = pkgs.zsh;
-    extraGroups = {
-      vboxusers.members = [ "b7" ];
-    };
   };
 
   users.users.root.initialPassword = "nix1";
@@ -136,10 +133,6 @@
       host = {
         enable = true;
         enableExtensionPack = true;
-      };
-      guest = {
-        enable = true;
-        dragAndDrop = true;
       };
     };
   };
