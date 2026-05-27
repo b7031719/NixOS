@@ -73,4 +73,7 @@
     systemd.enable = false;
   };
 
+  # Ensures lua lsp stubs are symlinked to the /run
+  environment.pathsToLink = [ "/share/hypr" ];
+
 }
