@@ -138,7 +138,7 @@
   };
   
   environment = {
-    pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];   # Create symlinks in the following locations
+    pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" "/share/hypr" ];   # Create symlinks in the following locations
     shells = with pkgs; [
       zsh
     ];
