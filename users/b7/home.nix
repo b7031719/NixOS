@@ -225,6 +225,11 @@
     glib
     android-tools
     better-adb-sync
+    grim
+    slurp
+    satty
+    wf-recorder
+    wl-clipboard
   ];
 
   home.sessionVariables = {
