@@ -179,7 +179,7 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks."*" = {
+    settings."*" = {
       addKeysToAgent = "yes";
       identitiesOnly = true;
       identityFile = "~/.ssh/id_ed25519";
