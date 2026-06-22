@@ -1,10 +1,39 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   programs.neovim = {
     enable = true;
     withRuby = false;
     withPython3 = false;
     sideloadInitLua = true;
+
+    plugins = with pkgs.vimPlugins; [
+      (nvim-treesitter.withPlugins (
+        p: with p; [
+          bash
+          c
+          c_sharp
+          css
+          csv
+          html
+          javascript
+          json
+          lua
+          markdown
+          markdown_inline
+          nix
+          python
+          query
+          vim
+          vimdoc
+          typescript
+        ]
+      ))
+    ];
 
     extraPackages = with pkgs; [
       # LSPs
@@ -16,18 +45,18 @@
       nixd
 
       # Formatters
-      black          # Python
-      isort          # Python import sorter and formatter
-      prettier       # JS/TS/HTML/CSS
-      stylua         # Lua
-      shfmt          # Bash/shell
-      nixfmt         # Nix
+      black # Python
+      isort # Python import sorter and formatter
+      prettier # JS/TS/HTML/CSS
+      stylua # Lua
+      shfmt # Bash/shell
+      nixfmt # Nix
 
       # Linters/diagnostics
-      shellcheck     # Bash
-      eslint         # JS/TS
-      python313Packages.flake8         # Python
-      statix         # Nix static analysis
+      shellcheck # Bash
+      eslint # JS/TS
+      python313Packages.flake8 # Python
+      statix # Nix static analysis
     ];
   };
 }
