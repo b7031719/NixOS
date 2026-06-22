@@ -225,11 +225,11 @@
     glib
     android-tools
     better-adb-sync
-    grim
-    slurp
-    satty
-    wf-recorder
-    wl-clipboard
+    grim # captures the screen given a region from slurp
+    slurp # interactive region and window selector outputs geometry to grim
+    satty # annotation / edting tool
+    wf-recorder # screen recorder
+    wl-clipboard # provides wl-copy and wl-paste for wayland clipboard support
   ];
 
   home.sessionVariables = {
