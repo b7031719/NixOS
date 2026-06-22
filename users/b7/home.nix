@@ -215,7 +215,7 @@
     nerd-fonts.caskaydia-cove
     libreoffice
     librecad
-    qelectrotech
+    # qelectrotech
     discord
     usbutils
     udisks2
