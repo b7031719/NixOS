@@ -133,6 +133,22 @@
     };
   };
 
+  programs.mpv = {
+    enable = true;
+    config = {
+      profile = "high-quality";
+      ytdl = "yes";
+      ytdl-format = "bestvideo+bestaudio";
+      hwdec = "auto";
+      hwdec-codecs = "all";
+      vo = "gpu-next";
+      scale = "ewa_lanczossharp";
+      cscale = "ewa_lanczossharp";
+      deband = "yes";
+      keep-open = "yes";
+    };
+  };
+
   programs.waybar = {
     enable = true;
   };
