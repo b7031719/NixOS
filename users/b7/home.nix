@@ -246,6 +246,7 @@
     satty # annotation / edting tool
     wf-recorder # screen recorder
     wl-clipboard # provides wl-copy and wl-paste for wayland clipboard support
+    qbittorrent
   ];
 
   home.sessionVariables = {
