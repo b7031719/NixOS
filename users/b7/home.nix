@@ -247,6 +247,7 @@
     wf-recorder # screen recorder
     wl-clipboard # provides wl-copy and wl-paste for wayland clipboard support
     qbittorrent
+    telegram-desktop
   ];
 
   home.sessionVariables = {
