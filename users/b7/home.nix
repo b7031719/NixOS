@@ -247,8 +247,10 @@
     wf-recorder # screen recorder
     wl-clipboard # provides wl-copy and wl-paste for wayland clipboard support
     qbittorrent
+    (pkgs.ffmpeg-full.override {
+      withUnfree = true;
+    })
     telegram-desktop
-    ffmpeg-full.override { withUnfree = true; }
   ];
 
   home.sessionVariables = {
