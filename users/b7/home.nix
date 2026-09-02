@@ -251,6 +251,7 @@
       withUnfree = true;
     })
     telegram-desktop
+    audacity
   ];
 
   home.sessionVariables = {
