@@ -66,6 +66,8 @@
     };
   };
 
+  dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
