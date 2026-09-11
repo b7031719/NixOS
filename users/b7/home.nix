@@ -166,7 +166,13 @@
 
   programs.kodi = {
     enable = true;
-    package = pkgs.kodi-wayland;
+    package = pkgs.kodi-wayland.withPackages (
+      kp: with kp; [
+        youtube
+        inputstream-adaptive
+        inputstream-ffmpegdirect
+      ]
+    );
   };
 
   programs.zapzap = {
