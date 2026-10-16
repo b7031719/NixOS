@@ -210,6 +210,14 @@
     };
   };
 
+  programs.btop = {
+    enable = true;
+    settings =  {
+      color_theme = "monokai";
+      theme_background = false;
+    };
+  };
+
   services.dunst = {
     # Notification daemon
     enable = true;
