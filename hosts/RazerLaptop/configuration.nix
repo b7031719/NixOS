@@ -61,8 +61,8 @@
   users.users.root.initialPassword = "nix1";
 
   hardware.bluetooth.enable = true;
+
   services = {
-    blueman.enable = true;
     hardware = {
       bolt.enable = true;
     };

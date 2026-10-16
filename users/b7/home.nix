@@ -212,10 +212,14 @@
 
   programs.btop = {
     enable = true;
-    settings =  {
+    settings = {
       color_theme = "monokai";
       theme_background = false;
     };
+  };
+
+  programs.bluetuith = {
+    enable = true;
   };
 
   services.dunst = {
