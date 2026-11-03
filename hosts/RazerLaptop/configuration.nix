@@ -5,7 +5,6 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
   boot.initrd.systemd = {
-    enable = true;
     tpm2.enable = true;
   };
 
