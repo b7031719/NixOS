@@ -1,9 +1,18 @@
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
   boot.initrd.systemd = {
     tpm2.enable = true;
   };
@@ -12,11 +21,11 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.supportedFilesystems = [ "ntfs" ];
-  
+
   sops = {
-    defaultSopsFile = ../../secrets/veracrypt.yaml;
-    age.generateKey = true;  # Generates /var/lib/sops-nix/key.txt on first rebuild
-    age.keyFile = "/var/lib/sops-nix/key.txt";  # Persistent host key for decryption
+    age.generateKey = true; # Generates /var/lib/sops-nix/key.txt on first rebuild
+    age.keyFile = "/var/lib/sops-nix/key.txt"; # Persistent host key for decryption
+    age.sshKeyPaths = [ "/home/b7/.ssh/id_ed25519_sops" ]; # Used for bootstrapping only
 
     secrets.veracrypt_pass = {
       format = "yaml";
@@ -26,33 +35,44 @@
     };
   };
 
-  systemd.services.unlock-veracrypt-data = {
-    description = "Unlock VeraCrypt data volume after graphical login";
-    wantedBy = [ "graphical.target" ];
-    after = [ "graphical.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = "${pkgs.systemd}/lib/systemd/systemd-cryptsetup attach data /dev/nvme0n1p8 ${config.sops.secrets.veracrypt_pass.path} tcrypt-veracrypt";
-      ExecStop = "${pkgs.systemd}/lib/systemd/systemd-cryptsetup detach data";
+  systemd.services = {
+    unlock-veracrypt-data = {
+      description = "Unlock VeraCrypt data volume after graphical login";
+      wantedBy = [ "graphical.target" ];
+      after = [ "graphical.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = "${pkgs.systemd}/lib/systemd/systemd-cryptsetup attach data /dev/nvme0n1p8 ${config.sops.secrets.veracrypt_pass.path} tcrypt-veracrypt";
+        ExecStop = "${pkgs.systemd}/lib/systemd/systemd-cryptsetup detach data";
+      };
     };
   };
 
-  fileSystems."/mnt/data" = { 
+  fileSystems."/mnt/data" = {
     device = "/dev/mapper/data";
     fsType = "ntfs-3g";
-    options = [ "rw" "uid=1000" "gid=100" "umask=0022" "nofail" ];
+    options = [
+      "rw"
+      "uid=1000"
+      "gid=100"
+      "umask=0022"
+      "nofail"
+    ];
   };
-  
-  networking = {
-    networkmanager.enable = true;
-  };
-  
+
+  networking.networkmanager.enable = true;
+
   users = {
     users.b7 = {
       isNormalUser = true;
       initialPassword = "nix1";
-      extraGroups = [ "wheel" "networkmanager" "video" "vboxusers" ];
+      extraGroups = [
+        "wheel"
+        "networkmanager"
+        "video"
+        "vboxusers"
+      ];
     };
     defaultUserShell = pkgs.zsh;
   };
@@ -71,7 +91,7 @@
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
   console.keyMap = "uk";
-  
+
   security = {
     rtkit.enable = true;
     polkit.enable = true;
@@ -84,7 +104,11 @@
       settings.Login = {
         IdleAction = "lock";
         IdleActionSec = 300;
-        SleepOperation = [ "suspend" "suspend-then-hibernate" "hibernate" ];
+        SleepOperation = [
+          "suspend"
+          "suspend-then-hibernate"
+          "hibernate"
+        ];
         HandlePowerKey = "suspend";
         HandlePowerKeyLongPress = "poweroff";
         HandleLidSwitch = "suspend";
@@ -97,8 +121,8 @@
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
-      pulse.enable = true;    # Provides a legacy API for supporting legacy PulseAudio apps
-      jack.enable = true;     # Provices a legacy API for supporting legacy JACK apps
+      pulse.enable = true; # Provides a legacy API for supporting legacy PulseAudio apps
+      jack.enable = true; # Provices a legacy API for supporting legacy JACK apps
     };
     # Autologin
     getty = {
@@ -120,7 +144,7 @@
   programs = {
     hyprland = {
       enable = true;
-      withUWSM = true;   # For Wayland session management and prevent apps from running as child processes to hyprland
+      withUWSM = true; # For Wayland session management and prevent apps from running as child processes to hyprland
       xwayland.enable = true;
     };
     zsh.enable = true;
@@ -135,9 +159,13 @@
       };
     };
   };
-  
+
   environment = {
-    pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" "/share/hypr" ];   # Create symlinks in the following locations
+    pathsToLink = [
+      "/share/xdg-desktop-portal"
+      "/share/applications"
+      "/share/hypr"
+    ]; # Create symlinks in the following locations
     shells = with pkgs; [
       zsh
     ];
@@ -147,9 +175,11 @@
       brightnessctl
       playerctl
     ];
+    sessionVariables = {
+      SOPS_AGE_KEY_FILE = "/var/lib/sops-nix/key.txt";
+    };
   };
 
   system.stateVersion = "25.11";
-  
-}
 
+}
