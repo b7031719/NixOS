@@ -25,6 +25,7 @@
   sops = {
     age.generateKey = true; # Generates /var/lib/sops-nix/key.txt on first rebuild
     age.keyFile = "/var/lib/sops-nix/key.txt"; # Persistent host key for decryption
+    age.sshKeyPaths = [ "/home/b7/.ssh/id_ed25519_sops" ]; # Used for bootstrapping only
 
     secrets.veracrypt_pass = {
       format = "yaml";
@@ -40,17 +41,59 @@
       group = "root";
       mode = "0400";
     };
+
+    templates."proton.conf" = {
+      content = ''
+        [Interface]
+        PrivateKey = ${config.sops.placeholder."protonvpn/private-key"}
+        Address = 10.2.0.2/32, 2a07:b944::2:2/128
+        DNS = 10.2.0.1, 2a07:b944::2:1
+
+        [Peer]
+        PublicKey = QV+zjwyGF91xEh+bC1ZJXK1B7K9wGlbsds1bkRidIEA=
+        Endpoint = 79.127.160.216:51820
+        AllowedIPs = 0.0.0.0/0, ::/0
+        PersistentKeepalive = 25
+      '';
+      path = "/run/secrets/ProtonVPN.conf";
+      mode = "0400";
+      owner = "root";
+    };
   };
 
-  systemd.services.unlock-veracrypt-data = {
-    description = "Unlock VeraCrypt data volume after graphical login";
-    wantedBy = [ "graphical.target" ];
-    after = [ "graphical.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = "${pkgs.systemd}/lib/systemd/systemd-cryptsetup attach data /dev/nvme0n1p8 ${config.sops.secrets.veracrypt_pass.path} tcrypt-veracrypt";
-      ExecStop = "${pkgs.systemd}/lib/systemd/systemd-cryptsetup detach data";
+  systemd.services = {
+    unlock-veracrypt-data = {
+      description = "Unlock VeraCrypt data volume after graphical login";
+      wantedBy = [ "graphical.target" ];
+      after = [ "graphical.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = "${pkgs.systemd}/lib/systemd/systemd-cryptsetup attach data /dev/nvme0n1p8 ${config.sops.secrets.veracrypt_pass.path} tcrypt-veracrypt";
+        ExecStop = "${pkgs.systemd}/lib/systemd/systemd-cryptsetup detach data";
+      };
+    };
+
+    import-proton-vpn = {
+      description = "Import ProtonVPN WireGuard profile into NetworkManager";
+      after = [ "NetworkManager.service" ];
+      wants = [ "NetworkManager.service" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = pkgs.writeShellScript "import-proton" ''
+          # Delete any previous profile with the same name so re-imports stay clean
+          ${pkgs.networkmanager}/bin/nmcli connection delete ProtonVPN 2>/dev/null || true
+          ${pkgs.networkmanager}/bin/nmcli connection import type wireguard file /run/secrets/ProtonVPN.conf
+          ${pkgs.networkmanager}/bin/nmcli connection modify ProtonVPN \
+          connection.id ProtonVPN \
+          connection.autoconnect no \
+          connection.autoconnect-priority 0
+          ${pkgs.networkmanager}/bin/nmcli connection down ProtonVPN || true
+          ${pkgs.networkmanager}/bin/nmcli connection reload
+        '';
+      };
     };
   };
 
@@ -66,54 +109,7 @@
     ];
   };
 
-  networking = {
-    networkmanager = {
-      enable = true;
-      ensureProfiles = {
-        profiles.proton = {
-          connection = {
-            id = "ProtonVPN";
-            type = "wireguard";
-            interface-name = "proton";
-            autoconnect = false;
-            permissions = "user:b7";
-          };
-
-          ipv4 = {
-            method = "manual";
-            addresses = "10.2.0.2/32";
-            dns = "10.2.0.1";
-          };
-
-          ipv6 = {
-            method = "manual";
-            addresses = "2a07:b944::2:2/128";
-            dns = "2a07:b944::2:1";
-          };
-
-          wireguard = {
-            private-key-flags = 1;
-          };
-
-          "wireguard-peer.QV+zjwyGF91xEh+bC1ZJXK1B7K9wGlbsds1bkRidIEA=" = {
-            allowed-ips = "0.0.0.0/0;::/0";
-            endpoint = "79.127.160.216:51820";
-            persistent-keepalive = 25;
-          };
-        };
-
-        secrets.entries = [
-          {
-            matchId = "ProtonVPN";
-            matchType = "wireguard";
-            matchSetting = "wireguard";
-            key = "private-key";
-            file = config.sops.secrets."protonvpn/private-key".path;
-          }
-        ];
-      };
-    };
-  };
+  networking.networkmanager.enable = true;
 
   users = {
     users.b7 = {
@@ -228,6 +224,9 @@
       playerctl
       wireguard-tools
     ];
+    sessionVariables = {
+      SOPS_AGE_KEY_FILE = "/var/lib/sops-nix/key.txt";
+    };
   };
 
   system.stateVersion = "25.11";
