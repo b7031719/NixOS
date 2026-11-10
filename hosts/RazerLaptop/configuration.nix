@@ -13,20 +13,23 @@
     "flakes"
   ];
 
-  boot.initrd.systemd = {
-    tpm2.enable = true;
+  boot = {
+    initrd.systemd = {
+      tpm2.enable = true;
+    };
+    loader = {
+      efi.canTouchEfiVariables = true;
+      systemd-boot.enable = true;
+    };
+    supportedFilesystems = [ "ntfs" ];
   };
-
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  boot.supportedFilesystems = [ "ntfs" ];
 
   sops = {
     age.generateKey = true; # Generates /var/lib/sops-nix/key.txt on first rebuild
     age.keyFile = "/var/lib/sops-nix/key.txt"; # Persistent host key for decryption
     age.sshKeyPaths = [ "/home/b7/.ssh/id_ed25519_sops" ]; # Used for bootstrapping only
 
+    # Password for decrypting the veracrypt data volume
     secrets.veracrypt_pass = {
       format = "yaml";
       sopsFile = ../../secrets/veracrypt.yaml;
@@ -49,6 +52,7 @@
     };
   };
 
+  # Mount the decrypted data partition
   fileSystems."/mnt/data" = {
     device = "/dev/mapper/data";
     fsType = "ntfs-3g";
@@ -64,28 +68,23 @@
   networking.networkmanager.enable = true;
 
   users = {
-    users.b7 = {
-      isNormalUser = true;
-      initialPassword = "nix1";
-      extraGroups = [
-        "wheel"
-        "networkmanager"
-        "video"
-        "vboxusers"
-      ];
+    users = {
+      root.initialPassword = "nix1";
+      b7 = {
+        isNormalUser = true;
+        initialPassword = "nix1";
+        extraGroups = [
+          "wheel"
+          "networkmanager"
+          "video"
+          "vboxusers"
+        ];
+      };
     };
     defaultUserShell = pkgs.zsh;
   };
 
-  users.users.root.initialPassword = "nix1";
-
   hardware.bluetooth.enable = true;
-
-  services = {
-    hardware = {
-      bolt.enable = true;
-    };
-  };
 
   # Locale settings
   time.timeZone = "Europe/London";
@@ -99,6 +98,9 @@
   };
 
   services = {
+    hardware = {
+      bolt.enable = true;
+    };
     #logind configuration
     logind = {
       settings.Login = {
@@ -161,11 +163,12 @@
   };
 
   environment = {
+    # Create symlinks in the following locations
     pathsToLink = [
       "/share/xdg-desktop-portal"
       "/share/applications"
       "/share/hypr"
-    ]; # Create symlinks in the following locations
+    ];
     shells = with pkgs; [
       zsh
     ];

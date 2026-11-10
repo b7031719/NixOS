@@ -18,18 +18,24 @@
     ./zen-browser.nix
   ];
 
-  home.username = "${username}";
-  home.homeDirectory = "${homeDirectory}";
-
   programs.home-manager.enable = true;
 
-  # Activation script to clone the dotfiles repo
-  home.activation.cloneDofiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    if [ ! -d "${dotfilesPath}/.git" ]; then
-      $DRY_RUN_CMD ${pkgs.git}/bin/git \
-      clone ${repoUrl} "${dotfilesPath}"
-    fi
-  '';
+  home = {
+    username = "${username}";
+    homeDirectory = "${homeDirectory}";
+    # Activation script to clone the dotfiles repo
+    activation.cloneDofiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      if [ ! -d "${dotfilesPath}/.git" ]; then
+        $DRY_RUN_CMD ${pkgs.git}/bin/git \
+        clone ${repoUrl} "${dotfilesPath}"
+      fi
+    '';
+    sessionVariables = {
+      NIXOS_OZONE_WL = "1"; # Try to force electron apps to use Wayland
+      EDITOR = "kitty -e nvim";
+    };
+    stateVersion = "24.11"; # Do not change. Required for defining the original home-manager install version
+  };
 
   xdg = {
     mimeApps = {
@@ -68,178 +74,179 @@
 
   dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
 
-  programs.zsh = {
-    enable = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-    enableCompletion = true;
-    loginExtra = ''
-      if uwsm check may-start; then
-        exec uwsm start hyprland-uwsm.desktop > /dev/null 2>&1
-      fi
-    '';
-  };
-
-  programs.starship = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-
-  programs.yazi = {
-    # Terminal based file manager
-    enable = true;
-    shellWrapperName = "y";
-    plugins = {
-      inherit (pkgs.yaziPlugins) gvfs;
-    };
-    keymap = {
-      mgr.prepend_keymap = [
-        {
-          on = [
-            "M"
-            "m"
-          ];
-          run = "plugin gvfs -- select-then-mount --jump";
-          desc = "Select device to mount and jump to its mount point";
-        }
-        {
-          on = [
-            "M"
-            "u"
-          ];
-          run = "plugin gvfs -- select-then-unmount --eject";
-          desc = "Select device then eject";
-        }
-        {
-          on = [
-            "g"
-            "m"
-          ];
-          run = "plugin gvfs -- jump-to-device";
-          desc = "Select device then jump to its mount point";
-        }
-      ];
-    };
-  };
-
   fonts.fontconfig.enable = true; # Allows kitty etc. to configure fonts.
 
-  programs.git = {
-    enable = true;
-    signing.format = "openpgp";
-    settings = {
-      user = {
-        name = "${username}";
-        email = "danfenton@pm.me";
+  programs = {
+
+    zsh = {
+      enable = true;
+      autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
+      enableCompletion = true;
+      loginExtra = ''
+        if uwsm check may-start; then
+          exec uwsm start hyprland-uwsm.desktop > /dev/null 2>&1
+        fi
+      '';
+    };
+
+    starship = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
+    yazi = {
+      # Terminal based file manager
+      enable = true;
+      shellWrapperName = "y";
+      plugins = {
+        inherit (pkgs.yaziPlugins) gvfs;
+      };
+      keymap = {
+        mgr.prepend_keymap = [
+          {
+            on = [
+              "M"
+              "m"
+            ];
+            run = "plugin gvfs -- select-then-mount --jump";
+            desc = "Select device to mount and jump to its mount point";
+          }
+          {
+            on = [
+              "M"
+              "u"
+            ];
+            run = "plugin gvfs -- select-then-unmount --eject";
+            desc = "Select device then eject";
+          }
+          {
+            on = [
+              "g"
+              "m"
+            ];
+            run = "plugin gvfs -- jump-to-device";
+            desc = "Select device then jump to its mount point";
+          }
+        ];
       };
     };
-  };
 
-  programs.mpv = {
-    enable = true;
-    config = {
-      profile = "high-quality";
-      ytdl = "yes";
-      ytdl-format = "bestvideo+bestaudio";
-      hwdec = "auto";
-      hwdec-codecs = "all";
-      vo = "gpu-next";
-      scale = "ewa_lanczossharp";
-      cscale = "ewa_lanczossharp";
-      deband = "yes";
-      keep-open = "yes";
-    };
-  };
-
-  programs.waybar = {
-    enable = true;
-  };
-
-  programs.wofi = {
-    # Application launcher
-    enable = true;
-  };
-
-  programs.tmux = {
-    enable = true;
-  };
-
-  programs.kodi = {
-    enable = true;
-    package = pkgs.kodi-wayland.withPackages (
-      kp: with kp; [
-        youtube
-        inputstream-adaptive
-        inputstream-ffmpegdirect
-      ]
-    );
-  };
-
-  programs.zapzap = {
-    enable = true;
-    settings = {
-      notification = {
-        donation_message = true;
-      };
-      system = {
-        scale = 150;
-        theme = "dark";
-        wayland = true;
-      };
-      website = {
-        open_page = false;
+    git = {
+      enable = true;
+      signing.format = "openpgp";
+      settings = {
+        user = {
+          name = "${username}";
+          email = "danfenton@pm.me";
+        };
       };
     };
-  };
 
-  programs.zathura = {
-    enable = true;
-    options = {
-      default-bg = "#272822";
-      default-fg = "#A89984";
+    mpv = {
+      enable = true;
+      config = {
+        profile = "high-quality";
+        ytdl = "yes";
+        ytdl-format = "bestvideo+bestaudio";
+        hwdec = "auto";
+        hwdec-codecs = "all";
+        vo = "gpu-next";
+        scale = "ewa_lanczossharp";
+        cscale = "ewa_lanczossharp";
+        deband = "yes";
+        keep-open = "yes";
+      };
+    };
+
+    waybar = {
+      enable = true;
+    };
+
+    wofi = {
+      enable = true;
+    };
+
+    tmux = {
+      enable = true;
+    };
+
+    kodi = {
+      enable = true;
+      package = pkgs.kodi-wayland.withPackages (
+        kp: with kp; [
+          youtube
+          inputstream-adaptive
+          inputstream-ffmpegdirect
+        ]
+      );
+    };
+
+    zapzap = {
+      enable = true;
+      settings = {
+        notification = {
+          donation_message = true;
+        };
+        system = {
+          scale = 150;
+          theme = "dark";
+          wayland = true;
+        };
+        website = {
+          open_page = false;
+        };
+      };
+    };
+
+    zathura = {
+      enable = true;
+      options = {
+        default-bg = "#272822";
+        default-fg = "#A89984";
+      };
+    };
+
+    ssh = {
+      enable = true;
+      enableDefaultConfig = false;
+      settings."*" = {
+        addKeysToAgent = "yes";
+        identitiesOnly = true;
+        identityFile = "~/.ssh/id_ed25519";
+      };
+    };
+
+    btop = {
+      enable = true;
+      settings = {
+        color_theme = "monokai";
+        theme_background = false;
+      };
+    };
+
+    bluetuith = {
+      enable = true;
     };
   };
 
-  programs.ssh = {
-    enable = true;
-    enableDefaultConfig = false;
-    settings."*" = {
-      addKeysToAgent = "yes";
-      identitiesOnly = true;
-      identityFile = "~/.ssh/id_ed25519";
-    };
-  };
-
-  programs.btop = {
-    enable = true;
-    settings = {
-      color_theme = "monokai";
-      theme_background = false;
-    };
-  };
-
-  programs.bluetuith = {
-    enable = true;
-  };
-
-  services.dunst = {
+  services = {
     # Notification daemon
-    enable = true;
+    dunst = {
+      enable = true;
+    };
+    udiskie = {
+      enable = true;
+      automount = true;
+      notify = true;
+      tray = "auto";
+    };
+    ssh-agent = {
+      enable = true;
+    };
+    # Start a polkit agent for password prompted privilege escalation
+    hyprpolkitagent.enable = true;
   };
-
-  services.udiskie = {
-    enable = true;
-    automount = true;
-    notify = true;
-    tray = "auto";
-  };
-
-  services.ssh-agent = {
-    enable = true;
-  };
-
-  # Start a polkit agent for password prompted privilege escalation
-  services.hyprpolkitagent.enable = true;
 
   home.packages = with pkgs; [
     kitty
@@ -273,12 +280,4 @@
     telegram-desktop
     audacity
   ];
-
-  home.sessionVariables = {
-    NIXOS_OZONE_WL = "1"; # Try to force electron apps to use Wayland
-    EDITOR = "kitty -e nvim";
-  };
-
-  home.stateVersion = "24.11"; # Do not change. Required for defining the original home-manager install version
-
 }
