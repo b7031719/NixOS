@@ -8,6 +8,7 @@
   repoUrl,
   ...
 }:
+
 {
 
   imports = [
@@ -190,7 +191,7 @@
         };
         system = {
           scale = 150;
-          theme = "dark";
+          theme = "automatic";
           wayland = true;
         };
         website = {
@@ -262,7 +263,6 @@
     discord
     usbutils
     udisks2
-    udiskie
     nfs-utils
     gocryptfs
     glib
