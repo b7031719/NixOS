@@ -1,7 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+
 {
   services.hyprpaper = {
     enable = true;
   };
-
 }

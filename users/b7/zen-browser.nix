@@ -1,4 +1,11 @@
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
+
 {
 
   imports = [ inputs.zen-browser.homeModules.default ];
@@ -30,6 +37,7 @@
           "zen.view.compact.theme-color-sidebar" = false;
           "zen.theme.acrylic-elements" = true;
         };
+
         userChrome = ''
           :root, #main-window, html[zen-compact-mode], #navigator-toolbox, .browser-toolbox-background {
             --zen-primary-color: rgb(39, 40, 34) !important;
@@ -69,32 +77,12 @@
             --zen-main-browser-background-toolbar-old: rgba(39, 40, 34, 0.8) !important;
           }
         '';
+
         extensions.packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
           ublock-origin
           darkreader
           proton-pass
         ];
-
-        # spaces = {
-        #   Default = {
-        #     id = "3408cb95-08f7-4808-b2ca-83361670c239";
-        #     position = 1000;
-        #     theme = {
-        #       type = "gradient";
-        #       colors = [
-        #         {
-        #           red = 39;
-        #           green = 40;
-        #           blue = 34;
-        #           algorithm = "floating";
-        #           type = "explicit-lightness";
-        #         }
-        #       ];
-        #       opacity = null;
-        #       texture = null;
-        #     };
-        #   };
-        # };
       };
     };
 
@@ -122,17 +110,17 @@
     mimeApps = {
       enable = true;
       defaultApplications = {
-        "text/html"                        = [ "zen-twilight.desktop" ];
-        "x-scheme-handler/http"            = [ "zen-twilight.desktop" ];
-        "x-scheme-handler/https"           = [ "zen-twilight.desktop" ];
-        "x-scheme-handler/about"           = [ "zen-twilight.desktop" ];
-        "x-scheme-handler/unknown"         = [ "zen-twilight.desktop" ];
-        "application/xhtml+xml"            = [ "zen-twilight.desktop" ];
-        "application/x-extension-htm"      = [ "zen-twilight.desktop" ];
-        "application/x-extension-html"     = [ "zen-twilight.desktop" ];
-        "application/x-extension-xht"      = [ "zen-twilight.desktop" ];
-        "application/x-extension-xhtml"    = [ "zen-twilight.desktop" ];
-        "x-scheme-handler/chrome"          = [ "zen-twilight.desktop" ];
+        "text/html" = [ "zen-twilight.desktop" ];
+        "x-scheme-handler/http" = [ "zen-twilight.desktop" ];
+        "x-scheme-handler/https" = [ "zen-twilight.desktop" ];
+        "x-scheme-handler/about" = [ "zen-twilight.desktop" ];
+        "x-scheme-handler/unknown" = [ "zen-twilight.desktop" ];
+        "application/xhtml+xml" = [ "zen-twilight.desktop" ];
+        "application/x-extension-htm" = [ "zen-twilight.desktop" ];
+        "application/x-extension-html" = [ "zen-twilight.desktop" ];
+        "application/x-extension-xht" = [ "zen-twilight.desktop" ];
+        "application/x-extension-xhtml" = [ "zen-twilight.desktop" ];
+        "x-scheme-handler/chrome" = [ "zen-twilight.desktop" ];
       };
     };
   };

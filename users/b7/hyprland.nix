@@ -4,6 +4,7 @@
   pkgs,
   ...
 }:
+
 {
   home.packages = [
     # Script to toggle mirroring of internal monitor eDP-1 if active and external monitors are connected
