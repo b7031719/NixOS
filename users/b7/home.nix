@@ -19,11 +19,11 @@
     ./zen-browser.nix
   ];
 
-  programs.home-manager.enable = true;
-
   home = {
     username = "${username}";
+
     homeDirectory = "${homeDirectory}";
+
     # Activation script to clone the dotfiles repo
     activation.cloneDofiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       if [ ! -d "${dotfilesPath}/.git" ]; then
@@ -31,11 +31,45 @@
         clone ${repoUrl} "${dotfilesPath}"
       fi
     '';
+
     sessionVariables = {
       NIXOS_OZONE_WL = "1"; # Try to force electron apps to use Wayland
       EDITOR = "kitty -e nvim";
     };
+
     stateVersion = "24.11"; # Do not change. Required for defining the original home-manager install version
+
+    packages = with pkgs; [
+      kitty
+      polkit
+      proton-pass
+      proton-vpn
+      protonmail-desktop
+      xdg-utils
+      nerd-fonts.caskaydia-cove
+      libreoffice
+      librecad
+      # qelectrotech
+      discord
+      usbutils
+      udisks2
+      nfs-utils
+      gocryptfs
+      glib
+      android-tools
+      better-adb-sync
+      grim # captures the screen given a region from slurp
+      slurp # interactive region and window selector outputs geometry to grim
+      satty # annotation / edting tool
+      wf-recorder # screen recorder
+      wl-clipboard # provides wl-copy and wl-paste for wayland clipboard support
+      qbittorrent
+      (pkgs.ffmpeg-full.override {
+        withUnfree = true;
+      })
+      telegram-desktop
+      audacity
+    ];
   };
 
   xdg = {
@@ -79,6 +113,8 @@
 
   programs = {
 
+    home-manager.enable = true;
+
     zsh = {
       enable = true;
       autosuggestion.enable = true;
@@ -91,13 +127,14 @@
       '';
     };
 
+    # Shell prompt
     starship = {
       enable = true;
       enableZshIntegration = true;
     };
 
+    # Terminal based file manager
     yazi = {
-      # Terminal based file manager
       enable = true;
       shellWrapperName = "y";
       plugins = {
@@ -236,48 +273,12 @@
     dunst = {
       enable = true;
     };
-    udiskie = {
-      enable = true;
-      automount = true;
-      notify = true;
-      tray = "auto";
-    };
+
     ssh-agent = {
       enable = true;
     };
+
     # Start a polkit agent for password prompted privilege escalation
     hyprpolkitagent.enable = true;
   };
-
-  home.packages = with pkgs; [
-    kitty
-    polkit
-    proton-pass
-    proton-vpn
-    protonmail-desktop
-    xdg-utils
-    nerd-fonts.caskaydia-cove
-    libreoffice
-    librecad
-    # qelectrotech
-    discord
-    usbutils
-    udisks2
-    nfs-utils
-    gocryptfs
-    glib
-    android-tools
-    better-adb-sync
-    grim # captures the screen given a region from slurp
-    slurp # interactive region and window selector outputs geometry to grim
-    satty # annotation / edting tool
-    wf-recorder # screen recorder
-    wl-clipboard # provides wl-copy and wl-paste for wayland clipboard support
-    qbittorrent
-    (pkgs.ffmpeg-full.override {
-      withUnfree = true;
-    })
-    telegram-desktop
-    audacity
-  ];
 }
