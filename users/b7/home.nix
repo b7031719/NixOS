@@ -280,5 +280,10 @@
 
     # Start a polkit agent for password prompted privilege escalation
     hyprpolkitagent.enable = true;
+
+    # Automount USB flash drives
+    udiskie = {
+      enable = true;
+    };
   };
 }
