@@ -21,7 +21,10 @@
         spacesForce = true;
         settings = {
           "browser.startup.page" = 3;
-          "privacy.resistFingerprinting" = true;
+          "privacy.resistFingerprinting" = false;
+          "privacy.fingerprintingProtection" = true;
+          "privacy.fingerprintingProtection.pbmode" = true;
+          "privacy.fingerprintingProtection.overrides" = "+AllTargets,-CSSPrefersColorScheme";
           "signon.management.page.override" = true;
           "layout.css.prefers-color-scheme.content-override" = 2;
           "browser.theme.content-theme" = 0;
